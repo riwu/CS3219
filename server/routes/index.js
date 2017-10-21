@@ -6,80 +6,79 @@ const router = express.Router();
 const papersCollection = 'a4papers';
 
 // Q1
-router.get('/venue/:venue/authors', (req, res) => {
+router.get('/venue/:venue/authors', async (req, res) => {
   // full path: /venue/:venue/authors?top=n
   // returns name and publication count of top n authors in venue
   // in the form of { name: count, ... }
-  connection.then((db) => {
-    const { venue, top } = req.params;
-    const parsedTop = top === undefined ? 10 : parseInt(top, 10);
 
-    const rawResult = db.collection(papersCollection)
-      .aggregate([
-        { $match: { venue } },
-        { $project: { _id: 0, author: '$authors.name' } },
-        { $unwind: '$author' },
-        { $sortByCount: '$author' },
-        { $limit: parsedTop },
-      ]);
+  const db = await connection;
 
-    rawResult.toArray().then((result) => {
-      const response = result
-        .reduce((obj, entry) => Object.assign(obj, { [entry._id]: entry.count }), {});
+  const { venue, top } = req.params;
+  const parsedTop = top === undefined ? 10 : parseInt(top, 10);
 
-      res.send(response);
-    });
-  });
+  const result = await db
+    .collection(papersCollection)
+    .aggregate([
+      { $match: { venue } },
+      { $project: { _id: 0, author: '$authors.name' } },
+      { $unwind: '$author' },
+      { $sortByCount: '$author' },
+      { $limit: parsedTop },
+    ])
+    .toArray();
+
+  const response = result
+    .reduce((obj, entry) => Object.assign(obj, { [entry._id]: entry.count }), {});
+
+  res.send(response);
 });
 
 // Q2
-router.get('/venue/:venue/papers', (req, res) => {
+router.get('/venue/:venue/papers', async (req, res) => {
   // full path: /venue/:venue/papers?top=n
   // returns name and citation count of top n papers in venue
   const { venue, top } = req.params;
   const parsedTop = top === undefined ? 5 : parseInt(top, 10);
 
-  connection.then((db) => {
-    const rawResult = db.collection(papersCollection)
-      .aggregate([
-        { $match: { venue } },
-        { $project: { _id: 0, title: 1, inCitations: 1 } },
-        { $unwind: '$inCitations' },
-        { $sortByCount: '$title' },
-        { $limit: parsedTop },
-      ]);
+  const db = await connection;
 
-    rawResult.toArray().then((result) => {
-      const response = result
-        .reduce((obj, entry) => Object.assign(obj, { [entry._id]: entry.count }), {});
+  const result = await db.collection(papersCollection)
+    .aggregate([
+      { $match: { venue } },
+      { $project: { _id: 0, title: 1, inCitations: 1 } },
+      { $unwind: '$inCitations' },
+      { $sortByCount: '$title' },
+      { $limit: parsedTop },
+    ])
+    .toArray();
 
-      res.send(response);
-    });
-  });
+  const response = result
+    .reduce((obj, entry) => Object.assign(obj, { [entry._id]: entry.count }), {});
+
+  res.send(response);
 });
 
 // Q3
-router.get('/venue/:venue/publications', (req, res) => {
+router.get('/venue/:venue/publications', async (req, res) => {
   // full path: /venue/:venue/publications
   // returns publication count in venue across the years
   const { venue } = req.params;
 
-  connection.then((db) => {
-    const rawResult = db.collection(papersCollection)
-      .aggregate([
-        { $match: { venue } },
-        { $project: { _id: 0, year: 1 } },
-        { $group: { _id: '$year', publications: { $sum: 1 } } },
-        { $sort: { year: 1 } },
-      ]);
+  const db = await connection;
 
-    rawResult.toArray().then((result) => {
-      const response = result
-        .reduce((obj, entry) => Object.assign(obj, { [entry._id]: entry.publications }), {});
+  const result = db.collection(papersCollection)
+    .aggregate([
+      { $match: { venue } },
+      { $project: { _id: 0, year: 1 } },
+      { $group: { _id: '$year', publications: { $sum: 1 } } },
+      { $sort: { year: 1 } },
+    ])
+    .toArray();
 
-      res.send(response);
-    });
-  });
+  const response = result
+    .reduce((obj, entry) => Object.assign(obj, { [entry._id]: entry.publications }), {});
+
+  res.send(response);
 });
 
 // Q4
@@ -127,12 +126,13 @@ router.get('/paper/:paper/web-citation', async (req, res) => {
     ])
     .toArray();
 
-  webPapers.push(rootPaper);
   const results = webPapers
-    .reduce((obj, entry) => Object.assign(obj, { [entry.id]: entry }), { topId: rootPaper.id });
+    .reduce(
+      (obj, entry) => Object.assign(obj, { [entry.id]: entry }),
+      { topId: rootPaper.id, [rootPaper.id]: rootPaper },
+    );
 
   res.send(results);
 });
-
 
 module.exports = router;
