@@ -19,14 +19,13 @@ router.get('/venue/:venue/authors', (req, res) => {
         { $match: { venue } },
         { $project: { _id: 0, author: '$authors.name' } },
         { $unwind: '$author' },
-        { $group: { _id: '$author', articles: { $sum: 1 } } },
-        { $sort: { articles: -1 } },
+        { $sortByCount: '$author' },
         { $limit: parsedTop },
       ]);
 
     rawResult.toArray().then((result) => {
       const response = result
-        .reduce((obj, entry) => Object.assign(obj, { [entry._id]: entry.articles }), {});
+        .reduce((obj, entry) => Object.assign(obj, { [entry._id]: entry.count }), {});
 
       res.send(response);
     });
@@ -46,14 +45,13 @@ router.get('/venue/:venue/papers', (req, res) => {
         { $match: { venue } },
         { $project: { _id: 0, title: 1, inCitations: 1 } },
         { $unwind: '$inCitations' },
-        { $group: { _id: '$title', inCitations: { $sum: 1 } } },
-        { $sort: { inCitations: -1 } },
+        { $sortByCount: '$title' },
         { $limit: parsedTop },
       ]);
 
     rawResult.toArray().then((result) => {
       const response = result
-        .reduce((obj, entry) => Object.assign(obj, { [entry._id]: entry.inCitations }), {});
+        .reduce((obj, entry) => Object.assign(obj, { [entry._id]: entry.count }), {});
 
       res.send(response);
     });
@@ -61,17 +59,31 @@ router.get('/venue/:venue/papers', (req, res) => {
 });
 
 // Q3
-router.get('/venue/:venue/publications', (req, res, next) => {
+router.get('/venue/:venue/publications', (req, res) => {
   // full path: /venue/:venue/publications
   // returns publication count in venue across the years
-  res.send({
-    2015: 15,
-    2016: 14,
+  const { venue } = req.params;
+
+  connection.then((db) => {
+    const rawResult = db.collection(papersCollection)
+      .aggregate([
+        { $match: { venue } },
+        { $project: { _id: 0, year: 1 } },
+        { $group: { _id: '$year', publications: { $sum: 1 } } },
+        { $sort: { year: 1 } },
+      ]);
+
+    rawResult.toArray().then((result) => {
+      const response = result
+        .reduce((obj, entry) => Object.assign(obj, { [entry._id]: entry.publications }), {});
+
+      res.send(response);
+    });
   });
 });
 
 // Q4
-router.get('/paper/:paper/web-citation', (req, res, next) => {
+router.get('/paper/:paper/web-citation', (req, res) => {
   // adjacency list?
   res.send({
     paper1: ['paper2', 'paper3', 'paper4'],
