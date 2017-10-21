@@ -83,13 +83,56 @@ router.get('/venue/:venue/publications', (req, res) => {
 });
 
 // Q4
-router.get('/paper/:paper/web-citation', (req, res) => {
-  // adjacency list?
-  res.send({
-    paper1: ['paper2', 'paper3', 'paper4'],
-    paper2: ['paper1', 'paper3'],
-    paper3: ['paper1'],
-  });
+router.get('/paper/:paper/web-citation', async (req, res) => {
+  const title = req.params.paper;
+  const db = await connection;
+
+  const rootPaper = await db
+    .collection(papersCollection)
+    .findOne(
+      { title },
+      { id: 1, title: 1, inCitations: 1 },
+    );
+
+  if (rootPaper === null) {
+    res.send(404);
+    return;
+  }
+
+  const webPapers = await db
+    .collection(papersCollection)
+    .aggregate([
+      { $match: { _id: rootPaper._id } },
+      {
+        $graphLookup: {
+          from: 'a4papers',
+          startWith: '$inCitations',
+          connectFromField: 'inCitations',
+          connectToField: 'id',
+          maxDepth: 1,
+          depthField: 'depth',
+          as: 'allCited',
+        },
+      },
+      { $project: { _id: 0, allCited: 1 } },
+      { $unwind: '$allCited' },
+      {
+        $project: {
+          id: '$allCited.id',
+          depth: '$allCited.depth',
+          title: '$allCited.title',
+          inCitations: '$allCited.inCitations',
+        },
+      },
+    ])
+    .toArray();
+
+  webPapers.push(rootPaper);
+  const results = webPapers
+    .reduce((obj, entry) => Object.assign(obj, { [entry.id]: entry }), { topId: rootPaper.id });
+
+  res.send(results);
 });
+
 
 module.exports = router;
