@@ -9,3 +9,7 @@
 // });
 //
 // export default connection;
+//
+const { connect } = require('mongodb').MongoClient;
+
+module.exports = connect('mongodb://localhost:27017/cs3219');
