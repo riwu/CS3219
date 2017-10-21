@@ -3,17 +3,34 @@ const connection = require('./connection');
 
 const router = express.Router();
 
+const papersCollection = 'a4papers';
+
 // Q1
-router.get('/venue/:venue/authors', (req, res, next) => {
+router.get('/venue/:venue/authors', (req, res) => {
   // full path: /venue/:venue/authors?top=n
   // returns name and publication count of top n authors in venue
-  res.send({
-    john: 15,
-    james: 10,
-  });
+  // in the form of { name: count, ... }
+  connection.then((db) => {
+    const { venue, top } = req.params;
+    const parsedTop = top === undefined ? 5 : parseInt(top, 10);
 
-  // to access db:
-  // connection.then(conn => conn.query('SELECT * FROM users')).then(rows => console.log(rows))
+    const rawResult = db.collection(papersCollection)
+      .aggregate([
+        { $match: { venue } },
+        { $project: { _id: 0, author: '$authors.name' } },
+        { $unwind: '$author' },
+        { $group: { _id: '$author', articles: { $sum: 1 } } },
+        { $sort: { articles: -1 } },
+        { $limit: parsedTop },
+      ]);
+
+    rawResult.toArray().then((result) => {
+      const response = result
+        .reduce((obj, entry) => Object.assign(obj, { [entry._id]: entry.articles }), {});
+
+      res.send(response);
+    });
+  });
 });
 
 // Q2
