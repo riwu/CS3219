@@ -8,5 +8,8 @@
   "env": {
       "node": true,
       "es6": true
+  },
+  "rules": {
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
   }
 }
