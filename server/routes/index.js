@@ -12,7 +12,7 @@ router.get('/venue/:venue/authors', (req, res) => {
   // in the form of { name: count, ... }
   connection.then((db) => {
     const { venue, top } = req.params;
-    const parsedTop = top === undefined ? 5 : parseInt(top, 10);
+    const parsedTop = top === undefined ? 10 : parseInt(top, 10);
 
     const rawResult = db.collection(papersCollection)
       .aggregate([
