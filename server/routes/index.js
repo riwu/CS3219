@@ -34,12 +34,29 @@ router.get('/venue/:venue/authors', (req, res) => {
 });
 
 // Q2
-router.get('/venue/:venue/papers', (req, res, next) => {
+router.get('/venue/:venue/papers', (req, res) => {
   // full path: /venue/:venue/papers?top=n
   // returns name and citation count of top n papers in venue
-  res.send({
-    paper1: 15,
-    paper2: 10,
+  const { venue, top } = req.params;
+  const parsedTop = top === undefined ? 10 : parseInt(top, 10);
+
+  connection.then((db) => {
+    const rawResult = db.collection(papersCollection)
+      .aggregate([
+        { $match: { venue } },
+        { $project: { _id: 0, title: 1, inCitations: 1 } },
+        { $unwind: '$inCitations' },
+        { $group: { _id: '$title', inCitations: { $sum: 1 } } },
+        { $sort: { inCitations: -1 } },
+        { $limit: parsedTop },
+      ]);
+
+    rawResult.toArray().then((result) => {
+      const response = result
+        .reduce((obj, entry) => Object.assign(obj, { [entry._id]: entry.inCitations }), {});
+
+      res.send(response);
+    });
   });
 });
 
