@@ -38,7 +38,7 @@ router.get('/venue/:venue/papers', (req, res) => {
   // full path: /venue/:venue/papers?top=n
   // returns name and citation count of top n papers in venue
   const { venue, top } = req.params;
-  const parsedTop = top === undefined ? 10 : parseInt(top, 10);
+  const parsedTop = top === undefined ? 5 : parseInt(top, 10);
 
   connection.then((db) => {
     const rawResult = db.collection(papersCollection)
