@@ -4,12 +4,16 @@ import { routerMiddleware, ConnectedRouter } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import { Provider } from 'react-redux';
 import { persistStore, autoRehydrate } from 'redux-persist';
+import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import reducer from './reducers';
 import Routes from './pages/routes';
 
 const history = createHistory();
-const middleware = [routerMiddleware(history), logger];
+const middleware = [routerMiddleware(history), thunk];
+if (process.env.NODE_ENV === 'development') {
+  middleware.push(logger);
+}
 const store = createStore(reducer, autoRehydrate(), applyMiddleware(...middleware));
 persistStore(store);
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, FormGroup, ControlLabel, FormControl, DropdownButton, MenuItem } from 'react-bootstrap';
+import { Form, FormGroup, ControlLabel, FormControl, DropdownButton, MenuItem, Button } from 'react-bootstrap';
 
 const TopStats = props => (
   <div>
@@ -34,6 +34,10 @@ const TopStats = props => (
         />
       </FormGroup>
     </Form>
+    <Button
+      onClick={() => props.getTopStats(props.topStats)}
+    >Generate
+    </Button>
   </div>
 );
 

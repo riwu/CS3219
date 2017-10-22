@@ -1,3 +1,4 @@
+import api from './api';
 
 export const setTopCount = count => ({
   type: 'SET_TOP_COUNT',
@@ -13,3 +14,9 @@ export const setTopVenue = venue => ({
   type: 'SET_TOP_VENUE',
   venue,
 });
+
+export const getTopStats = topStats => (dispatch) => {
+  api.getTopStats(topStats).then((response) => {
+    console.log(response);
+  });
+};
