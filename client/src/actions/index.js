@@ -42,3 +42,22 @@ export const getTrendStats = trendQueries => (dispatch) => {
     });
   });
 };
+
+export const setVenueCount = count => ({
+  type: 'SET_VENUE_COUNT',
+  count,
+});
+
+export const setVenueYear = year => ({
+  type: 'SET_VENUE_YEAR',
+  year,
+});
+
+export const getTopVenues = venueQueries => (dispatch) => {
+  api.getTopVenues(venueQueries).then((data) => {
+    dispatch({
+      type: 'SET_VENUE_DATA',
+      data,
+    });
+  });
+};
