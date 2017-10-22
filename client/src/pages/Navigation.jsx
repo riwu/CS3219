@@ -1,11 +1,29 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
+import { Nav, NavItem } from 'react-bootstrap';
 
-const Navigation = () => (
-  <div>
-    <Link to="/">Top Stats</Link>
-    <Link to="Trends">Trends</Link>
-  </div>
+const Navigation = props => (
+  <Nav bsStyle="pills">
+    {[
+      { path: '/', title: 'Top Stats by Venue' },
+      { path: '/Trends', title: 'Trends' },
+      { path: '/WebCitation', title: 'Web Citation' },
+      { path: '/StatsByYear', title: 'Top Stats by year' },
+    ].map(({ path, title }) => (
+      <NavItem
+        key={path}
+        onSelect={() => props.push(path)}
+        active={props.path === path}
+      >
+        {title}
+      </NavItem>
+    ))}
+  </Nav>
 );
 
-export default Navigation;
+const mapStateToProps = state => ({
+  path: state.route.location.pathname,
+});
+
+export default connect(mapStateToProps, { push })(Navigation);

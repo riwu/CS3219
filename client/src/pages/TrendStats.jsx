@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
-import BarChart from '../components/BarChart';
+// import BarChart from '../components/BarChart';
 import LineChart from '../components/LineChart';
 
 const Trends = props => (
