@@ -16,7 +16,10 @@ export const setTopVenue = venue => ({
 });
 
 export const getTopStats = topStats => (dispatch) => {
-  api.getTopStats(topStats).then((response) => {
-    console.log(response);
+  api.getTopStats(topStats).then((data) => {
+    dispatch({
+      type: 'SET_TOP_DATA',
+      data,
+    });
   });
 };

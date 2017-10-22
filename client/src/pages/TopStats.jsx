@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, FormGroup, ControlLabel, FormControl, DropdownButton, MenuItem, Button } from 'react-bootstrap';
+import BarChart from '../components/BarChart';
 
 const TopStats = props => (
   <div>
@@ -38,6 +39,7 @@ const TopStats = props => (
       onClick={() => props.getTopStats(props.topStats)}
     >Generate
     </Button>
+    {props.topStats.data && <BarChart data={props.topStats.data} />}
   </div>
 );
 

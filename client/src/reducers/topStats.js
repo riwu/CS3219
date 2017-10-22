@@ -2,6 +2,7 @@ const initialState = {
   count: '10',
   type: 'Authors',
   venue: 'ArXiv',
+  data: null,
 };
 
 const topStats = (state = initialState, action) => {
@@ -20,6 +21,11 @@ const topStats = (state = initialState, action) => {
       return {
         ...state,
         venue: action.venue,
+      };
+    case 'SET_TOP_DATA':
+      return {
+        ...state,
+        data: action.data,
       };
     default:
       return state;
