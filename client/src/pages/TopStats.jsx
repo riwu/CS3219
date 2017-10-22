@@ -39,6 +39,7 @@ const TopStats = props => (
       onClick={() => props.getTopStats(props.topStats)}
     >Generate
     </Button>
+    <div>Top {props.topStats.count} {props.topStats.type} for venue {props.topStats.venue}</div>
     {props.topStats.data && <BarChart data={props.topStats.data} />}
   </div>
 );

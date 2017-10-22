@@ -1,9 +1,9 @@
 import React from 'react';
-import { BarChart, XAxis, YAxis, Tooltip, Bar } from 'recharts';
+import { LineChart, XAxis, YAxis, Tooltip, Line } from 'recharts';
 
 const width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 const Chart = props => (
-  <BarChart
+  <LineChart
     width={width}
     height={250}
     data={Object.entries(props.data).map(([name, value]) => ({
@@ -14,8 +14,8 @@ const Chart = props => (
     <XAxis dataKey="name" />
     <YAxis />
     <Tooltip />
-    <Bar dataKey="value" fill="#8884d8" />
-  </BarChart>
+    <Line type="monotone" dataKey="value" fill="#8884d8" />
+  </LineChart>
 );
 
 export default Chart;
