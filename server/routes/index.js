@@ -66,7 +66,7 @@ router.get('/venue/:venue/publications', async (req, res) => {
 
   const db = await connection;
 
-  const result = db.collection(papersCollection)
+  const result = await db.collection(papersCollection)
     .aggregate([
       { $match: { venue } },
       { $project: { _id: 0, year: 1 } },
@@ -133,6 +133,35 @@ router.get('/paper/:paper/web-citation', async (req, res) => {
     );
 
   res.send(results);
+});
+
+// Q5
+router.get('/year/:year/avg-cite', async (req, res) => {
+  // full path: /year/:year/avg-cite?top=n
+  // returns name and publication count of top n authors in venue
+  // in the form of { name: count, ... }
+
+  const db = await connection;
+
+  const { year, top } = req.params;
+  const parsedTop = top === undefined ? 10 : parseInt(top, 10);
+  const yearInt = parseInt(year, 10);
+
+  const result = await db
+    .collection(papersCollection)
+    .aggregate([
+      { $match: { year: yearInt } },
+      { $project: { _id: 0, venue: 1, numCites: { $size: '$inCitations' } } },
+      { $group: { _id: '$venue', avgCite: { $avg: '$numCites' } } },
+      { $sort: { avgCite: -1 } },
+      { $limit: parsedTop },
+    ])
+    .toArray();
+
+  const response = result
+    .reduce((obj, entry) => Object.assign(obj, { [entry._id]: entry.avgCite }), {});
+
+  res.send(response);
 });
 
 module.exports = router;
