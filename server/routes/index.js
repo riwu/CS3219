@@ -13,7 +13,8 @@ router.get('/venue/:venue/authors', async (req, res) => {
 
   const db = await connection;
 
-  const { venue, top } = req.params;
+  const { venue } = req.params;
+  const { top } = req.query;
   const parsedTop = top === undefined ? 10 : parseInt(top, 10);
 
   const result = await db
@@ -37,7 +38,8 @@ router.get('/venue/:venue/authors', async (req, res) => {
 router.get('/venue/:venue/papers', async (req, res) => {
   // full path: /venue/:venue/papers?top=n
   // returns name and citation count of top n papers in venue
-  const { venue, top } = req.params;
+  const { venue } = req.params;
+  const { top } = req.query;
   const parsedTop = top === undefined ? 5 : parseInt(top, 10);
 
   const db = await connection;
@@ -143,7 +145,8 @@ router.get('/year/:year/avg-cite', async (req, res) => {
 
   const db = await connection;
 
-  const { year, top } = req.params;
+  const { year } = req.params;
+  const { top } = req.query;
   const parsedTop = top === undefined ? 10 : parseInt(top, 10);
   const yearInt = parseInt(year, 10);
 
