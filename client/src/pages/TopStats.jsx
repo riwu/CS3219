@@ -8,24 +8,31 @@ const TopStats = props => (
         <ControlLabel>Top</ControlLabel>
         <FormControl
           type="number"
-          value={props.topInput}
+          value={props.topStats.count}
           min={1}
-          onChange={e => props.setTopInput(e.target.value)}
+          onChange={e => props.setTopCount(e.target.value)}
         />
       </FormGroup>
       <DropdownButton
         id="Top Type"
-        title={props.topType}
+        title={props.topStats.type}
       >
         {['Authors', 'Papers'].map(type => (
           <MenuItem
             key={type}
             onClick={() => props.setTopType(type)}
-            active={props.topType === type}
+            active={props.topStats.type === type}
           >{type}
           </MenuItem>
       ))}
       </DropdownButton>
+      <FormGroup>
+        <ControlLabel>Venue</ControlLabel>
+        <FormControl
+          value={props.topStats.venue}
+          onChange={e => props.setTopVenue(e.target.value)}
+        />
+      </FormGroup>
     </Form>
   </div>
 );

@@ -8,10 +8,3 @@ script:
   - cd $TEST_DIR && npm install && npm run build
 notifications:
   email: false
-deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
-  local_dir: client/build
-  on:
-    branch: master

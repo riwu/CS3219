@@ -1,13 +1,12 @@
 import { connect } from 'react-redux';
 import TopStats from './TopStats';
-import { setTopInput, setTopType } from '../actions';
+import { setTopCount, setTopType, setTopVenue } from '../actions';
 
 const mapStateToProps = state => ({
-  topInput: state.topInput,
-  topType: state.topType,
+  topStats: state.topStats,
 });
 
 export default connect(
   mapStateToProps,
-  { setTopInput, setTopType },
+  { setTopCount, setTopType, setTopVenue },
 )(TopStats);
