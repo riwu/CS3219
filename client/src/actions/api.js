@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:3020/';
+axios.defaults.baseURL = 'https://cs3219.ycholocron.com/';
 
 const get = path => axios.get(path).then(response => response.data);
 

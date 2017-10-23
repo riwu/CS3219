@@ -7,10 +7,10 @@ import './Navigation.css';
 const Navigation = props => (
   <Nav bsStyle="tabs" className="Navigation">
     {[
-      { path: '/', title: 'Top stats by venue' },
-      { path: '/StatsByYear', title: 'Top stats by year' },
-      { path: '/Trends', title: 'Trends' },
-      { path: '/CitationWeb', title: 'Citation web' },
+      { path: '/assignment4-pair25', title: 'Top stats by venue' },
+      { path: '/assignment4-pair25/StatsByYear', title: 'Top stats by year' },
+      { path: '/assignment4-pair25/Trends', title: 'Trends' },
+      { path: '/assignment4-pair25/CitationWeb', title: 'Citation web' },
     ].map(({ path, title }) => (
       <NavItem
         key={path}
