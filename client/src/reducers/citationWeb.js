@@ -1,6 +1,7 @@
 const initialState = {
   paper: 'Low-density parity check codes over GF(q)',
   data: null,
+  depth: 2,
 };
 
 const citationWeb = (state = initialState, action) => {
@@ -13,7 +14,13 @@ const citationWeb = (state = initialState, action) => {
     case 'SET_CITATION_DATA':
       return {
         ...state,
+        title: state,
         data: action.data,
+      };
+    case 'SET_CITATION_DEPTH':
+      return {
+        ...state,
+        depth: action.depth,
       };
     default:
       return state;

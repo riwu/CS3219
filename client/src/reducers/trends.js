@@ -1,6 +1,6 @@
 const initialState = {
   type: 'Publications',
-  venue: 'ArXiv',
+  venue: 'ICSE',
   data: null,
   chart: 'Line Chart',
 };
@@ -20,6 +20,7 @@ const trends = (state = initialState, action) => {
     case 'SET_TREND_DATA':
       return {
         ...state,
+        title: state,
         data: action.data,
       };
     case 'SET_TREND_CHART':

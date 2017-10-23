@@ -13,6 +13,7 @@ const Trends = props => (
         <FormControl
           value={props.trends.venue}
           onChange={e => props.setTrendVenue(e.target.value)}
+          placeholder="Enter a venue"
         />
       </FormGroup>
       <DropdownButton
@@ -35,10 +36,12 @@ const Trends = props => (
         Generate
       </Button>
     </Form>
-    <h3 className="app-filterTitle">
-      {props.trends.type} trend for
-      venue <span className="app-filterTitleSpecial">{props.trends.venue}</span>
-    </h3>
+    {props.trends.title &&
+      <h3 className="app-filterTitle">
+        {props.trends.title.type} trend for
+        venue <span className="app-filterTitleSpecial">{props.trends.title.venue}</span>
+      </h3>
+    }
     {props.trends.data && props.trends.chart === 'Bar Chart' && <BarChart data={props.trends.data} />}
     {props.trends.data && props.trends.chart === 'Pie Chart' && <PieChart data={props.trends.data} />}
     {props.trends.data && props.trends.chart === 'Line Chart' && <LineChart data={props.trends.data} />}

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import CitationWeb from './CitationWeb';
-import { setCitationPaper, getCitationWeb } from '../actions';
+import { setCitationPaper, getCitationWeb, setCitationDepth } from '../actions';
 
 const mapStateToProps = state => ({
   citationWeb: state.citationWeb,
@@ -9,6 +9,6 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    setCitationPaper, getCitationWeb,
+    setCitationPaper, getCitationWeb, setCitationDepth,
   },
 )(CitationWeb);

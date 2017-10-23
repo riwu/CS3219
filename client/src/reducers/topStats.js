@@ -27,6 +27,7 @@ const topStats = (state = initialState, action) => {
       return {
         ...state,
         data: action.data,
+        title: state,
       };
     case 'SET_TOP_CHART':
       return {

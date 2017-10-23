@@ -40,6 +40,8 @@ const TopStats = props => (
         <FormControl
           value={props.topStats.venue}
           onChange={e => props.setTopVenue(e.target.value)}
+          autoComplete="on"
+          placeholder="Enter a venue"
         />
       </FormGroup>
       <DropdownButton
@@ -62,10 +64,12 @@ const TopStats = props => (
         Generate
       </Button>
     </Form>
-    <h3 className="app-filterTitle">
-      Top <span className="app-filterTitleSpecial">{props.topStats.count} {props.topStats.type}</span> for
-      venue <span className="app-filterTitleSpecial">{props.topStats.venue}</span>
-    </h3>
+    {props.topStats.title &&
+      <h3 className="app-filterTitle">
+        Top <span className="app-filterTitleSpecial">{props.topStats.title.count} {props.topStats.title.type}</span> for
+        venue <span className="app-filterTitleSpecial">{props.topStats.title.venue}</span>
+      </h3>
+    }
     {props.topStats.data && props.topStats.chart === 'Bar Chart' && <BarChart data={props.topStats.data} />}
     {props.topStats.data && props.topStats.chart === 'Pie Chart' && <PieChart data={props.topStats.data} />}
     {props.topStats.data && props.topStats.chart === 'Line Chart' && <LineChart data={props.topStats.data} />}

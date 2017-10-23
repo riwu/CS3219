@@ -90,3 +90,8 @@ export const getCitationWeb = paper => (dispatch) => {
     });
   });
 };
+
+export const setCitationDepth = depth => ({
+  type: 'SET_CITATION_DEPTH',
+  depth,
+});

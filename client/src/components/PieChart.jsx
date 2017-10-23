@@ -11,9 +11,10 @@ const Chart = props => (
         data={Object.entries(props.data).map(([name, value]) => ({ name, value }))}
         label={({ value, name }) => `${name} - ${value}`}
         labelLine
+        dataKey="value"
       >
-        {Object.entries(props.data).map((entry, index) =>
-          <Cell fill={COLORS[index % COLORS.length]} />)
+        {Object.entries(props.data).map(([name, value], index) =>
+          <Cell key={name} fill={COLORS[index % COLORS.length]} />)
         }
       </Pie>
       <Tooltip />

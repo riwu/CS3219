@@ -20,6 +20,7 @@ const topVenues = (state = initialState, action) => {
     case 'SET_VENUE_DATA':
       return {
         ...state,
+        title: state,
         data: action.data,
       };
     case 'SET_VENUE_CHART':

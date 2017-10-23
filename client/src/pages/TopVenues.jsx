@@ -48,10 +48,12 @@ const TopVenues = props => (
         Generate
       </Button>
     </Form>
-    <h3 className="app-filterTitle">
-      Top <span className="app-filterTitleSpecial">{props.topVenues.count}</span> for
-      year <span className="app-filterTitleSpecial">{props.topVenues.year}</span>
-    </h3>
+    {props.topVenues.title &&
+      <h3 className="app-filterTitle">
+        Top <span className="app-filterTitleSpecial">{props.topVenues.title.count}</span> for
+        year <span className="app-filterTitleSpecial">{props.topVenues.title.year}</span>
+      </h3>
+    }
     {props.topVenues.data && props.topVenues.chart === 'Bar Chart' && <BarChart data={props.topVenues.data} />}
     {props.topVenues.data && props.topVenues.chart === 'Pie Chart' && <PieChart data={props.topVenues.data} />}
     {props.topVenues.data && props.topVenues.chart === 'Line Chart' && <LineChart data={props.topVenues.data} />}
