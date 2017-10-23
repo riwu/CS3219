@@ -3,6 +3,7 @@ const initialState = {
   type: 'Authors',
   venue: 'ArXiv',
   data: null,
+  chart: 'Bar Chart',
 };
 
 const topStats = (state = initialState, action) => {
@@ -26,6 +27,11 @@ const topStats = (state = initialState, action) => {
       return {
         ...state,
         data: action.data,
+      };
+    case 'SET_TOP_CHART':
+      return {
+        ...state,
+        chart: action.chart,
       };
     default:
       return state;

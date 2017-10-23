@@ -1,5 +1,7 @@
 import React from 'react';
-import { Form, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
+import { Form, FormGroup, ControlLabel, FormControl, Button, DropdownButton, MenuItem } from 'react-bootstrap';
+import BarChart from '../components/BarChart';
+import PieChart from '../components/PieChart';
 import LineChart from '../components/LineChart';
 import './filter.css';
 
@@ -13,6 +15,19 @@ const Trends = props => (
           onChange={e => props.setTrendVenue(e.target.value)}
         />
       </FormGroup>
+      <DropdownButton
+        id="Chart Type"
+        title={props.trends.chart}
+      >
+        {['Line Chart', 'Bar Chart', 'Pie Chart'].map(type => (
+          <MenuItem
+            key={type}
+            onClick={() => props.setTrendChart(type)}
+            active={props.trends.chart === type}
+          >{type}
+          </MenuItem>
+        ))}
+      </DropdownButton>
       <Button
         bsStyle="primary"
         onClick={() => props.getTrendStats(props.trends)}
@@ -24,7 +39,9 @@ const Trends = props => (
       {props.trends.type} trend for
       venue <span className="app-filterTitleSpecial">{props.trends.venue}</span>
     </h3>
-    {props.trends.data && <LineChart data={props.trends.data} />}
+    {props.trends.data && props.trends.chart === 'Bar Chart' && <BarChart data={props.trends.data} />}
+    {props.trends.data && props.trends.chart === 'Pie Chart' && <PieChart data={props.trends.data} />}
+    {props.trends.data && props.trends.chart === 'Line Chart' && <LineChart data={props.trends.data} />}
   </div>
 );
 

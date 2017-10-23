@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import TopVenues from './TopVenues';
-import { setVenueCount, setVenueYear, getTopVenues } from '../actions';
+import { setVenueCount, setVenueYear, getTopVenues, setVenueChart } from '../actions';
 
 const mapStateToProps = state => ({
   topVenues: state.topVenues,
@@ -9,6 +9,6 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    setVenueCount, setVenueYear, getTopVenues,
+    setVenueCount, setVenueYear, getTopVenues, setVenueChart,
   },
 )(TopVenues);

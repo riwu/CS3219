@@ -2,6 +2,7 @@ const initialState = {
   type: 'Publications',
   venue: 'ArXiv',
   data: null,
+  chart: 'Line Chart',
 };
 
 const trends = (state = initialState, action) => {
@@ -20,6 +21,11 @@ const trends = (state = initialState, action) => {
       return {
         ...state,
         data: action.data,
+      };
+    case 'SET_TREND_CHART':
+      return {
+        ...state,
+        chart: action.chart,
       };
     default:
       return state;

@@ -15,6 +15,11 @@ export const setTopVenue = venue => ({
   venue,
 });
 
+export const setTopChart = chart => ({
+  type: 'SET_TOP_CHART',
+  chart,
+});
+
 export const getTopStats = topQueries => (dispatch) => {
   api.getTopStats(topQueries).then((data) => {
     dispatch({
@@ -34,6 +39,11 @@ export const setTrendVenue = venue => ({
   venue,
 });
 
+export const setTrendChart = chart => ({
+  type: 'SET_TREND_CHART',
+  chart,
+});
+
 export const getTrendStats = trendQueries => (dispatch) => {
   api.getTrendStats(trendQueries).then((data) => {
     dispatch({
@@ -51,6 +61,11 @@ export const setVenueCount = count => ({
 export const setVenueYear = year => ({
   type: 'SET_VENUE_YEAR',
   year,
+});
+
+export const setVenueChart = chart => ({
+  type: 'SET_VENUE_CHART',
+  chart,
 });
 
 export const getTopVenues = venueQueries => (dispatch) => {

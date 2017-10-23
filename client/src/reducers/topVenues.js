@@ -2,6 +2,7 @@ const initialState = {
   count: 10,
   year: 2015,
   data: null,
+  chart: 'Pie Chart',
 };
 
 const topVenues = (state = initialState, action) => {
@@ -20,6 +21,11 @@ const topVenues = (state = initialState, action) => {
       return {
         ...state,
         data: action.data,
+      };
+    case 'SET_VENUE_CHART':
+      return {
+        ...state,
+        chart: action.chart,
       };
     default:
       return state;

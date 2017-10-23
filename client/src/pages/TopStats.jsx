@@ -1,6 +1,8 @@
 import React from 'react';
 import { Form, FormGroup, ControlLabel, FormControl, DropdownButton, MenuItem, Button } from 'react-bootstrap';
 import BarChart from '../components/BarChart';
+import PieChart from '../components/PieChart';
+import LineChart from '../components/LineChart';
 import './filter.css';
 
 const TopStats = props => (
@@ -40,6 +42,19 @@ const TopStats = props => (
           onChange={e => props.setTopVenue(e.target.value)}
         />
       </FormGroup>
+      <DropdownButton
+        id="Chart Type"
+        title={props.topStats.chart}
+      >
+        {['Pie Chart', 'Bar Chart', 'Line Chart'].map(type => (
+          <MenuItem
+            key={type}
+            onClick={() => props.setTopChart(type)}
+            active={props.topStats.chart === type}
+          >{type}
+          </MenuItem>
+        ))}
+      </DropdownButton>
       <Button
         bsStyle="primary"
         onClick={() => props.getTopStats(props.topStats)}
@@ -51,7 +66,9 @@ const TopStats = props => (
       Top <span className="app-filterTitleSpecial">{props.topStats.count} {props.topStats.type}</span> for
       venue <span className="app-filterTitleSpecial">{props.topStats.venue}</span>
     </h3>
-    {props.topStats.data && <BarChart data={props.topStats.data} />}
+    {props.topStats.data && props.topStats.chart === 'Bar Chart' && <BarChart data={props.topStats.data} />}
+    {props.topStats.data && props.topStats.chart === 'Pie Chart' && <PieChart data={props.topStats.data} />}
+    {props.topStats.data && props.topStats.chart === 'Line Chart' && <LineChart data={props.topStats.data} />}
   </div>
 );
 
