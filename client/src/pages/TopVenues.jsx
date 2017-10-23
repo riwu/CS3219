@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, FormGroup, ControlLabel, FormControl, DropdownButton, MenuItem, Button } from 'react-bootstrap';
+import { Form, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 import BarChart from '../components/BarChart';
 
 const TopVenues = props => (

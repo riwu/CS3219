@@ -8,7 +8,7 @@ const Navigation = props => (
     {[
       { path: '/', title: 'Top Stats by Venue' },
       { path: '/Trends', title: 'Trends' },
-      { path: '/WebCitation', title: 'Web Citation' },
+      { path: '/CitationWeb', title: 'Citation Web' },
       { path: '/StatsByYear', title: 'Top Stats by year' },
     ].map(({ path, title }) => (
       <NavItem

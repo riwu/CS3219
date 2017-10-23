@@ -9,12 +9,12 @@ const topVenues = (state = initialState, action) => {
     case 'SET_VENUE_YEAR':
       return {
         ...state,
-        type: action.year,
+        year: action.year,
       };
     case 'SET_VENUE_COUNT':
       return {
         ...state,
-        venue: action.count,
+        count: action.count,
       };
     case 'SET_VENUE_DATA':
       return {

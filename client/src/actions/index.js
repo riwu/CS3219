@@ -61,3 +61,17 @@ export const getTopVenues = venueQueries => (dispatch) => {
     });
   });
 };
+
+export const setCitationPaper = paper => ({
+  type: 'SET_CITATION_PAPER',
+  paper,
+});
+
+export const getCitationWeb = paper => (dispatch) => {
+  api.getCitationWeb(paper).then((data) => {
+    dispatch({
+      type: 'SET_CITATION_DATA',
+      data,
+    });
+  });
+};
