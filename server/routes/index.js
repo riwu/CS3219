@@ -88,17 +88,24 @@ router.get('/paper/:paper/web-citation', async (req, res) => {
   const title = req.params.paper;
   const db = await connection;
 
-  const rootPaper = await db
+  const rootPapers = await db
     .collection(papersCollection)
-    .findOne(
-      { title },
-      { id: 1, title: 1, inCitations: 1 },
-    );
+    .aggregate([
+      { $match: { title } },
+      {
+        $project: {
+          id: 1, title: 1, inCitations: 1, authors: '$authors.name',
+        },
+      },
+      { $limit: 1 },
+    ]).toArray();
 
-  if (rootPaper === null) {
+  if (rootPapers.length === 0) {
     res.send(404);
     return;
   }
+
+  const rootPaper = rootPapers[0];
 
   const webPapers = await db
     .collection(papersCollection)
@@ -122,6 +129,7 @@ router.get('/paper/:paper/web-citation', async (req, res) => {
           id: '$allCited.id',
           depth: '$allCited.depth',
           title: '$allCited.title',
+          authors: '$allCited.authors.name',
           inCitations: '$allCited.inCitations',
         },
       },
