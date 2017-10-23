@@ -1,0 +1,27 @@
+.app-controlLabel {
+  margin-right: 5px;
+}
+
+.app-dropdown {
+  margin-left: 10px;
+}
+
+.app-filterTitle {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.app-filterTitleSpecial {
+  color: green;
+}
+
+.app-form {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 10% 25px 10%;
+  border-bottom: 1px solid lightgrey;
+}
+
+.app-paperInput {
+  width: 300px !important;
+}

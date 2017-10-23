@@ -1,5 +1,5 @@
 const initialState = {
-  type: 'publications',
+  type: 'Publications',
   venue: 'ArXiv',
   data: null,
 };

@@ -2,14 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { Nav, NavItem } from 'react-bootstrap';
+import './Navigation.css';
 
 const Navigation = props => (
-  <Nav bsStyle="pills">
+  <Nav bsStyle="tabs" className="Navigation">
     {[
       { path: '/', title: 'Top Stats by Venue' },
+      { path: '/StatsByYear', title: 'Top Stats by year' },
       { path: '/Trends', title: 'Trends' },
       { path: '/CitationWeb', title: 'Citation Web' },
-      { path: '/StatsByYear', title: 'Top Stats by year' },
     ].map(({ path, title }) => (
       <NavItem
         key={path}

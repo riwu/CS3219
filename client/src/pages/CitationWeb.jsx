@@ -4,20 +4,25 @@ import ForceDirectedGraph from '../components/ForceDirectedGraph';
 
 const CitationWeb = props => (
   <div>
-    <Form inline>
+    <Form inline className="app-form">
       <FormGroup>
-        <ControlLabel>Base paper</ControlLabel>
+        <ControlLabel className="app-controlLabel">Base paper</ControlLabel>
         <FormControl
           value={props.citationWeb.paper}
+          className="app-paperInput"
           onChange={e => props.setCitationPaper(e.target.value)}
         />
       </FormGroup>
+      <Button
+        bsStyle="primary"
+        onClick={() => props.getCitationWeb(props.citationWeb)}
+      >
+        Generate
+      </Button>
     </Form>
-    <Button
-      onClick={() => props.getCitationWeb(props.citationWeb)}
-    >Generate
-    </Button>
-    <div>Citation Web for {props.citationWeb.paper}</div>
+    <h3 className="app-filterTitle">
+      Citation Web for <span className="app-filterTitleSpecial">{props.citationWeb.paper}</span>
+    </h3>
     {props.citationWeb.data && <ForceDirectedGraph data={props.citationWeb.data} />}
   </div>
 );
