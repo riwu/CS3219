@@ -86,6 +86,9 @@ router.get('/venue/:venue/publications', async (req, res) => {
 // Q4
 router.get('/paper/:paper/web-citation', async (req, res) => {
   const title = req.params.paper;
+  const { depth } = req.query;
+  const parsedDepth = depth === undefined ? 2 : parseInt(depth, 10);
+
   const db = await connection;
 
   const rootPapers = await db
@@ -117,7 +120,7 @@ router.get('/paper/:paper/web-citation', async (req, res) => {
           startWith: '$inCitations',
           connectFromField: 'inCitations',
           connectToField: 'id',
-          maxDepth: 1,
+          maxDepth: parsedDepth - 1,
           depthField: 'depth',
           as: 'allCited',
         },
