@@ -1,27 +1,29 @@
 import React from 'react';
 import { InteractiveForceGraph, ForceGraphNode, ForceGraphArrowLink } from 'react-vis-force';
 
-const colors = ['red', 'blue', 'yellow'];
+const colors = ['cyan', 'lightgreen', 'orange'];
+const height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 const width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 const ForceDirectedGraph = (props) => {
   const dataProps = Object.values(props.data).filter(data => data.id);
   return (
     <InteractiveForceGraph
-      simulationOptions={{ height: 800, width: 800 }}
+      simulationOptions={{ height: height - 240, width }}
       labelAttr="label"
       zoom
     >
-      {dataProps.map(({ id, depth, title }) => (
-        <ForceGraphNode
-          key={id}
-          node={{
-            id,
-            label: title,
-            radius: [5, 4, 3][depth],
-            color: 'red',
-          }}
-          fill={colors[depth]}
-        />
+      {dataProps.map(({
+         id, depth, title, authors,
+        }) => (
+          <ForceGraphNode
+            key={id}
+            node={{
+              id,
+              label: `${title} (${authors.join(', ')})`,
+              radius: [4, 3, 5][depth === undefined ? 2 : depth],
+            }}
+            fill={colors[depth === undefined ? 2 : depth]}
+          />
        ))}
       {dataProps.reduce((arr, { id, inCitations }) => {
           arr.push(...inCitations.map(target => ({ source: id, target })));
