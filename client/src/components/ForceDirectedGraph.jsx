@@ -7,10 +7,8 @@ const ForceDirectedGraph = (props) => {
   const dataProps = Object.values(props.data).filter(data => data.id);
   return (
     <InteractiveForceGraph
-      simulationOptions={{ height: width, width }}
+      simulationOptions={{ height: 800, width: 800 }}
       labelAttr="label"
-      onSelectNode={node => console.log(node)}
-      highlightDependencies
       zoom
     >
       {dataProps.map(({ id, depth, title }) => (
