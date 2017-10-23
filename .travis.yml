@@ -1,15 +1,16 @@
 language: node_js
 node_js:
   - 8
-env:
+install:
+  - cd client && npm install
 script:
-  - cd client && npm install && npm run build
+  - npm run build
 notifications:
   email: false
 deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
-  local_dir: client
+  local_dir: build
   on:
     branch: master
