@@ -215,7 +215,6 @@ export default class ForceGraph extends PureComponent {
     const isSame = newData.nodes.length === prevData.nodes.length &&
       newData.links.length === prevData.links.length &&
       (newData.nodes[0] || {}).id === (prevData.nodes[0] || {}).id;
-
     this.simulation = updateSimulation(simulation, {
       ...DEFAULT_SIMULATION_PROPS,
       ...simulationOptions,
