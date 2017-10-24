@@ -9,10 +9,7 @@ const Chart = ({ data }) => {
   return (
     <ResponsiveContainer height={height - 230}>
       <LineChart
-        data={Object.entries(data).map(([name, value]) => ({
-        name,
-        value,
-      }))}
+        data={Object.entries(data).map(([name, value]) => ({ name, value: Math.round(value) }))}
       >
         <XAxis dataKey="name" />
         <YAxis />

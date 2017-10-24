@@ -13,7 +13,7 @@ const Chart = ({ data }) => {
     <ResponsiveContainer height={height - 230}>
       <PieChart >
         <Pie
-          data={dataArr.map(([name, value]) => ({ name, value }))}
+          data={dataArr.map(([name, value]) => ({ name, value: Math.round(value) }))}
           label={({ value, name }) => `${name} - ${value}`}
           labelLine
           dataKey="value"
