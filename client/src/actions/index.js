@@ -88,6 +88,11 @@ export const getCitationWeb = paper => (dispatch) => {
       type: 'SET_CITATION_DATA',
       data,
     });
+  }).catch(() => {
+    dispatch({
+      type: 'SET_CITATION_DATA',
+      data: {},
+    });
   });
 };
 

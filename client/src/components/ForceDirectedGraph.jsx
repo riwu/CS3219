@@ -4,7 +4,7 @@ import { InteractiveForceGraph, ForceGraphNode, ForceGraphArrowLink } from './re
 const height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 const width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 const ForceDirectedGraph = ({ data }) => {
-  if (Object.keys(data).length === 0) {
+  if (!(data.nodes || {}).length) {
     return <h1 style={{ textAlign: 'center', color: 'red', marginTop: '100px' }}>No results found</h1>;
   }
   return (

@@ -144,7 +144,6 @@ router.get('/paper/:paper/web-citation', async (req, res) => {
       (obj, entry) => Object.assign(obj, { [entry.id]: entry }),
       { topId: rootPaper.id, [rootPaper.id]: rootPaper },
     );
-
   res.send(results);
 });
 
