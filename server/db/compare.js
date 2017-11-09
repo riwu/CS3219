@@ -1,6 +1,17 @@
 const { connection, papersCollection } = require('./connection');
 
-async function queryCitationYearMap(venue, year) {
+function computeIntervalMatchStage(start, end, property) {
+  if (start === null && end === null) {
+    return { $match: { [property]: { $exists: true } } };
+  }
+
+  const startFilter = start === null ? {} : { $gte: start };
+  const endFilter = end === null ? {} : { $lte: end };
+
+  return { $match: { [property]: Object.assign(startFilter, endFilter, { $exists: true }) } };
+}
+
+async function queryCitationYearMap(venue, year, start, end) {
   const db = await connection;
 
   return db.collection(papersCollection)
@@ -17,7 +28,7 @@ async function queryCitationYearMap(venue, year) {
         },
       },
       { $unwind: '$outCitations_docs' },
-      { $match: { 'outCitations_docs.year': { $exists: true } } },
+      computeIntervalMatchStage(start, end, 'outCitations_docs.year'),
       { $project: { cite_year: '$outCitations_docs.year' } },
       {
         $group: {

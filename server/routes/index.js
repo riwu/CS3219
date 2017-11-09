@@ -12,12 +12,16 @@ router.get('/compare', async (req, res) => {
   const conferences = _.castArray(req.query.conference);
   const years = _.castArray(req.query.year).map(yr => parseInt(yr, 10));
 
+  const { start, end } = req.query;
+  const parsedStart = start === undefined ? null : parseInt(start, 10);
+  const parsedEnd = end === undefined ? null : parseInt(end, 10);
+
   const conferenceYearObjs = _(conferences)
     .zip(years)
     .map(pair => ({ conference: pair[0], year: pair[1] }));
 
   const results = conferenceYearObjs
-    .map(({ conference, year }) => queryCitationYearMap(conference, year))
+    .map(({ conference, year }) => queryCitationYearMap(conference, year, parsedStart, parsedEnd))
     .value();
 
   const formattedResults = _(await Promise.all(results))
