@@ -1,9 +1,58 @@
 const express = require('express');
+const _ = require('lodash');
 const connection = require('./connection');
 
 const router = express.Router();
-
 const papersCollection = 'a4papers';
+
+// Compare API
+router.get('/compare', async (req, res) => {
+  const db = await connection;
+
+  // Conference and year may be single value or an array
+  const conferences = _.castArray(req.query.conference);
+  const years = _.castArray(req.query.year).map(yr => parseInt(yr, 10));
+
+  const conferenceYearObjs =
+    _(conferences)
+      .zip(years)
+      .map(pair => _.zipObject(['conference', 'year'], pair))
+      .value();
+
+  const results = Promise.all(conferenceYearObjs
+    .map(async ({ conference, year }) => db.collection(papersCollection)
+      .aggregate([
+        { $match: { venue: conference, year } },
+        { $project: { venue: 1, year: 1, outCitations: 1 } },
+        { $unwind: '$outCitations' },
+        {
+          $lookup: {
+            from: 'a4papers',
+            localField: 'outCitations',
+            foreignField: 'id',
+            as: 'outCitations_docs',
+          },
+        },
+        { $unwind: '$outCitations_docs' },
+        { $match: { 'outCitations_docs.year': { $exists: true } } },
+        { $project: { cite_year: '$outCitations_docs.year' } },
+        {
+          $group: {
+            _id: '$cite_year', cite_count: { $sum: 1 },
+          },
+        },
+        { $sort: { _id: 1 } },
+        { $project: { _id: 0, cite_year: '$_id', cite_count: '$cite_count' } },
+      ])
+      .toArray()));
+
+  const formattedResults = _(await results)
+    .map(result => _.chain(result).keyBy('cite_year').mapValues('cite_count'))
+    .zip(conferenceYearObjs)
+    .map(result => Object.assign({ citations: result[0] }, result[1]))
+    .value();
+  res.send(formattedResults);
+});
 
 // Q1
 router.get('/venue/:venue/authors', async (req, res) => {
