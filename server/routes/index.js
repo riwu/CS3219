@@ -3,6 +3,7 @@ const _ = require('lodash');
 const { connection, papersCollection } = require('../db/connection');
 const { queryCitationYearMap } = require('../db/compare');
 const { queryRootPaper, queryGraph } = require('../db/web-citation');
+const { queryTop } = require('../db/top');
 
 const router = express.Router();
 
@@ -31,6 +32,24 @@ router.get('/compare', async (req, res) => {
     .value();
 
   res.send(formattedResults);
+});
+
+router.get('/top/:aggregator/:metric', async (req, res) => {
+  const { aggregator, metric } = req.params;
+  const {
+    n, venue, title, author,
+  } = req.query;
+  const year = parseInt(req.query.year, 10);
+  const parsedN = n === undefined ? 10 : parseInt(n, 10);
+
+  res.send(await queryTop(
+    aggregator,
+    metric,
+    parsedN,
+    {
+      venue, title, year, author,
+    },
+  ));
 });
 
 // Citation Web
