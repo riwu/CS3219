@@ -7,7 +7,47 @@ const { queryImpactFactor } = require('../db/impact-factor');
 
 const router = express.Router();
 
-// Compare API
+/**
+ * Compare API
+ *
+ * This API compares two difference conferences (or venue) from two years.
+ *
+ * Each conference is analyzed based on citations made in it's papers. These citations are grouped
+ * by the cited paper's year and the total count for each conference year pair is provided for each
+ * of the years.
+ *
+ * Parameters:
+ *    URL: None
+ *    Query:
+ *        - conference: A conference (or venue name) to compare. Multiple values should be specified
+ *                      to form an array.
+ *        - year: A year for the conference specified. Multiple values should be specified to form
+ *                an array. Be sure to specify them in the same order as conference.
+ *        - start: The start year (inclusive) for collating citation counts. No limit is set if
+ *                 omitted.
+ *        - end: The end year (inclusive) for collating citation counts. No limit is set if omitted.
+ *    /compare?conference=ArXiv&year=2010&conference=ICSE&year=2011&start=1996&end=1999
+ * Returns: A JSON array with yearly citation counts for each conference specified
+ *  [
+ *    {
+ *      citations: {
+ *        1996: 1,
+ *        1998: 3,
+ *        1999: 4,
+ *      },
+ *      conference: "ArXiv",
+ *      year: 2010
+ *    },
+ *    {
+ *      citations: {
+ *        1997: 1,
+ *        1999: 1
+ *    },
+ *    conference: "ICSE",
+ *    year: 2011
+ *    }
+ *  ]
+ */
 router.get('/compare', async (req, res) => {
   // Conference and year may be single value or an array
   const conferences = _.castArray(req.query.conference);
