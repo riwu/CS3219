@@ -1,9 +1,9 @@
 const express = require('express');
 const _ = require('lodash');
-const { connection, papersCollection } = require('../db/connection');
 const { queryCitationYearMap } = require('../db/compare');
 const { queryRootPaper, queryGraph } = require('../db/web-citation');
 const { queryTop } = require('../db/top');
+const { queryImpactFactor } = require('../db/impact-factor');
 
 const router = express.Router();
 
@@ -34,6 +34,37 @@ router.get('/compare', async (req, res) => {
   res.send(formattedResults);
 });
 
+/**
+ * Top API
+ *
+ * This API endpoint returns "top" statistics. There are 3 options for this API.
+ *
+ * :aggregator is the category to analyze. For example, using "year" as the aggregator
+ * will give counts for the metrics grouped by a paper's year.
+ *
+ * :metric is the thing to count. For example, using "numCitations" will count the number
+ * citations within a aggregate group.
+ *
+ * Filters can be specified in the query parameters. Specifying filters reduces the scope of
+ * the search. For example, specifying "year=2010" will only consider papers published in 2010.
+ *
+ * Parameters:
+ *    URL:
+ *        - aggregator: The category to group by, can be either of
+ *                      ['author', 'venue', 'title', 'year']
+ *        - metric: The metric to count with, can be either of
+ *                  ['numPapers', 'numCites', 'numCitedBy', 'numAuthors', 'numVenues']
+ *    Query:
+ *        - n: The number of top entries to return, defaults to 10
+ *        - venue: The paper's venue to filter by
+ *        - title: The paper's title to filter by
+ *        - author: The author's name to filter by
+ * Returns: A JSON object mapping aggregator category to count
+ *  {
+ *    2007: 37590,
+ *    2008: 41941
+ *  }
+ */
 router.get('/top/:aggregator/:metric', async (req, res) => {
   const { aggregator, metric } = req.params;
   const {
@@ -75,112 +106,15 @@ router.get('/paper/:paper/web-citation', async (req, res) => {
   res.send(results);
 });
 
-// Q1
-router.get('/venue/:venue/authors', async (req, res) => {
-  // full path: /venue/:venue/authors?top=n
-  // returns name and publication count of top n authors in venue
-  // in the form of { name: count, ... }
-
-  const db = await connection;
-
-  const { venue } = req.params;
-  const { top } = req.query;
-  const parsedTop = top === undefined ? 10 : parseInt(top, 10);
-
-  const result = await db
-    .collection(papersCollection)
-    .aggregate([
-      { $match: { venue } },
-      { $project: { _id: 0, author: '$authors.name' } },
-      { $unwind: '$author' },
-      { $sortByCount: '$author' },
-      { $limit: parsedTop },
-    ])
-    .toArray();
-
-  const response = result
-    .reduce((obj, entry) => Object.assign(obj, { [entry._id]: entry.count }), {});
-
-  res.send(response);
-});
-
-// Q2
-router.get('/venue/:venue/papers', async (req, res) => {
-  // full path: /venue/:venue/papers?top=n
-  // returns name and citation count of top n papers in venue
-  const { venue } = req.params;
-  const { top } = req.query;
-  const parsedTop = top === undefined ? 5 : parseInt(top, 10);
-
-  const db = await connection;
-
-  const result = await db.collection(papersCollection)
-    .aggregate([
-      { $match: { venue } },
-      { $project: { _id: 0, title: 1, inCitations: 1 } },
-      { $unwind: '$inCitations' },
-      { $sortByCount: '$title' },
-      { $limit: parsedTop },
-    ])
-    .toArray();
-
-  const response = result
-    .reduce((obj, entry) => Object.assign(obj, { [entry._id]: entry.count }), {});
-
-  res.send(response);
-});
-
-// Q3
-router.get('/venue/:venue/publications', async (req, res) => {
-  // full path: /venue/:venue/publications
-  // returns publication count in venue across the years
-  const { venue } = req.params;
-
-  const db = await connection;
-
-  const result = await db.collection(papersCollection)
-    .aggregate([
-      { $match: { venue } },
-      { $project: { _id: 0, year: 1 } },
-      { $group: { _id: '$year', publications: { $sum: 1 } } },
-      { $sort: { year: 1 } },
-    ])
-    .toArray();
-
-  const response = result
-    .reduce((obj, entry) => Object.assign(obj, { [entry._id]: entry.publications }), {});
-
-  res.send(response);
-});
-
 // Q5
-router.get('/year/:year/avg-cite', async (req, res) => {
-  // full path: /year/:year/avg-cite?top=n
-  // returns name and publication count of top n authors in venue
-  // in the form of { name: count, ... }
-
-  const db = await connection;
-
+router.get('/year/:year/impact-factor', async (req, res) => {
   const { year } = req.params;
   const { top } = req.query;
   const parsedTop = top === undefined ? 10 : parseInt(top, 10);
   const yearInt = parseInt(year, 10);
 
-  const result = await db
-    .collection(papersCollection)
-    .aggregate([
-      { $match: { year: yearInt } },
-      { $project: { _id: 0, venue: 1, numCites: { $size: '$inCitations' } } },
-      { $group: { _id: '$venue', avgCite: { $avg: '$numCites' } } },
-      { $sort: { avgCite: -1 } },
-      { $limit: parsedTop },
-    ])
-    .toArray();
-
-  const response = result
-    .reduce((obj, entry) => Object.assign(obj, { [entry._id]: entry.avgCite }), {});
-
-  res.send(response);
+  const result = await queryImpactFactor(yearInt, parsedTop);
+  res.send(_(result).keyBy('_id').mapValues('impactFactor').value());
 });
 
 module.exports = router;
