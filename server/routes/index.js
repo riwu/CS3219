@@ -99,6 +99,7 @@ router.get('/compare', async (req, res) => {
  *        - venue: The paper's venue to filter by
  *        - title: The paper's title to filter by
  *        - author: The author's name to filter by
+ *  /top/year/numCitedBy?conference=ArXiv
  * Returns: A JSON object mapping aggregator category to count
  *  {
  *    2007: 37590,
@@ -125,7 +126,42 @@ router.get('/top/:aggregator/:metric', async (req, res) => {
   res.send(_.chain(results).keyBy('_id').mapValues('count').value());
 });
 
-// Citation Web
+/**
+ * Citation Web API
+ *
+ * The API to query for a citation web. This API accepts a paper title to use as the "root" paper.
+ * Subsequently, each paper citing the root paper is included, and then all papers citing these
+ * papers are included and so on. The process occurs in a breadth-first manner.
+ *
+ * Finally, all papers included are returned in an adjacency list manner, with directed edges
+ * pointing out from the root. The "depth" of each paper is also included.
+ *
+ * Parameters:
+ *    URL:
+ *        - paper: The title of the paper to use as the root
+ *    Query:
+ *        - depth: The number of times we find and include papers citing the included papers
+ * /paper/Low-density%20parity%20check%20codes%20over%20GF(q)/web-citation?depth=5
+ * Return: A JSON object mapping paper id to it's adjacency list information. A "topId" mapping
+ *         indicates the root paper's id.
+ *  {
+ *    topId: "36adf8c327b95bdffe2778bf022e0234d433454a",
+ *    36adf8c327b95bdffe2778bf022e0234d433454a: {
+ *      id: "36adf8c327b95bdffe2778bf022e0234d433454a",
+ *      inCitations: [
+ *        "841b2570545a4e9764bdf9e8a96fe3abaa53f9ce",
+ *        "9db35e9a16375857fcadcc0d34de8b82985771b4",
+ *        ...
+ *      ],
+ *    },
+ *    841b2570545a4e9764bdf9e8a96fe3abaa53f9ce: {
+ *      id: "841b2570545a4e9764bdf9e8a96fe3abaa53f9ce",
+ *      depth: 1,
+ *      inCitations: [...],
+ *    },
+ *    ...
+ *  }
+ */
 router.get('/paper/:paper/web-citation', async (req, res) => {
   const title = req.params.paper;
   const { depth } = req.query;
@@ -146,7 +182,28 @@ router.get('/paper/:paper/web-citation', async (req, res) => {
   res.send(results);
 });
 
-// Q5
+/**
+ * Impact Factor API.
+ *
+ * This API returns the Impact Factor for venues for a given year.
+ *
+ * Impact Factor based on the definition here: https://en.wikipedia.org/wiki/Impact_factor.
+ *
+ * Only the top few venues are returned, defaulting to 10.
+ *
+ * Parameters:
+ *    - URL:
+ *        - year: The year to analyze impact factor for
+ *    - Query:
+ *        - top: The number of results to return
+ *  /year/2010/impact-factor?top=3
+ * Return: A JSON object mapping venue name to impact factor
+ *  {
+ *    Journal of Cardiovascular Magnetic Resonance: 320,
+ *    WSDM: 290,
+ *    Annals of GIS: 244
+ *  }
+ */
 router.get('/year/:year/impact-factor', async (req, res) => {
   const { year } = req.params;
   const { top } = req.query;
