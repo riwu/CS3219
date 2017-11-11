@@ -7,7 +7,7 @@ db.a4papers.aggregate([
       as: 'inCitations',
     },
   },
-  { $project: { document: '$$ROOT', inCitations: '$inCitations.id' } },
+  { $addFields: { inCitations: '$inCitations.id' } },
   { $out: 'a4papers' },
 ]);
 
@@ -20,6 +20,6 @@ db.a4papers.aggregate([
       as: 'outCitations',
     },
   },
-  { $project: { document: '$$ROOT', outCitations: '$outCitations.id' } },
+  { $addFields: { outCitations: '$outCitations.id' } },
   { $out: 'a4papers' },
 ]);
