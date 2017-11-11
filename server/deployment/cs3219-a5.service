@@ -1,5 +1,5 @@
 [Unit]
-Description=CS3219 Assignment 4
+Description=CS3219 Assignment 5
 After=syslog.target
 After=network.target
 Requires=mongod.service
@@ -7,8 +7,8 @@ Wants=nginx.service
 
 [Service]
 Type=simple
-WorkingDirectory=/home/yichen/assignment4-pair25/server/
-ExecStart=/usr/bin/node /home/yichen/assignment4-pair25/server/bin/www
+WorkingDirectory=/home/yichen/assignment5-group8/server/
+ExecStart=/usr/bin/node /home/yichen/assignment5-group8/server/bin/www
 User=yichen
 Group=yichen
 UMask=0002
@@ -16,7 +16,7 @@ RestartSec=1
 Restart=on-failure
 StandardOutput=syslog
 StandardError=syslog
-SyslogIdentifier=cs3219-a4
+SyslogIdentifier=cs3219-a5
 
 [Install]
 WantedBy=multi-user.target
