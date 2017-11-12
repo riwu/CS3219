@@ -39,6 +39,24 @@ export const getImpactStats = queries => (dispatch) => {
   });
 };
 
+export const setTrendRowValue = (column, index, value) => ({
+  type: 'SET_TREND_ROW_VALUE',
+  column,
+  index,
+  value,
+});
+
+export const removeTrendRow = index => ({
+  type: 'REMOVE_TREND_ROW',
+  index,
+});
+
+export const setNewTrendRow = (column, value) => ({
+  type: 'SET_NEW_TREND_ROW',
+  column,
+  value,
+});
+
 export const setTrendValue = (field, value) => ({
   type: 'SET_TREND_VALUE',
   field,

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import CompareTrends from './CompareTrends';
-import { setImpactValue, getImpactStats } from '../actions';
+import { setTrendValue, getTrendStats } from '../actions';
 
 const mapStateToProps = state => ({
   compareTrends: state.compareTrends,
@@ -9,6 +9,6 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    setImpactValue, getImpactStats,
+    setTrendValue, getTrendStats,
   },
 )(CompareTrends);

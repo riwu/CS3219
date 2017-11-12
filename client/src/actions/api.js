@@ -11,7 +11,18 @@ const encodeQueries = arr => arr.reduce((str, [key, value]) =>
 
 export default {
   getVenues: () => get('venues'),
-  getCompare: (conferences, years, start, end) => get(`compare?${encodeQueries(conferences, years, start, end)}`),
+  getTrendStats: (params) => {
+    const conferences = params.conferences
+      .filter(([conf, year]) => conf.trim() !== '' && year.trim() !== '')
+      .reduce((arr, [conf, year]) => {
+        arr.push(['conference', conf]);
+        arr.push(['year', year]);
+        return arr;
+      }, []);
+    const queries = [['start', params.startYear], ['end', params.endYear]];
+    console.log('compare query', `compare?${encodeQueries([...conferences, ...queries])}`);
+    return get(`compare?${encodeQueries([...conferences, ...queries])}`);
+  },
   getTopStats: (params) => {
     const aggregator = {
       Authors: 'author',
@@ -39,5 +50,4 @@ export default {
     return get(`year/${params.year}/impact-factor?top=${params.count}`);
   },
   getCitationWeb: ({ paper, depth }) => get(`paper/${encodeURIComponent(paper.trim())}/web-citation?depth=${depth}`),
-  getCompareTrends: ({ count, year }) => get(`year/${year}/avg-cite?top=${count}`),
 };
