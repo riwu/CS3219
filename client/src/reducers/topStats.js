@@ -11,7 +11,7 @@ const initialState = {
 
 const topStats = (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_TOP_Value':
+    case 'SET_TOP_VALUE':
       return {
         ...state,
         [action.field]: action.value,

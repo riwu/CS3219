@@ -10,7 +10,7 @@ export const getVenues = () => (dispatch) => {
 };
 
 export const setTopValue = (field, value) => ({
-  type: 'SET_TOP_Value',
+  type: 'SET_TOP_VALUE',
   field,
   value,
 });
@@ -24,25 +24,16 @@ export const getTopStats = params => (dispatch) => {
   });
 };
 
-export const setTrendType = topType => ({
-  type: 'SET_TREND_TYPE',
-  topType,
+export const setImpactValue = (field, value) => ({
+  type: 'SET_IMPACT_VALUE',
+  field,
+  value,
 });
 
-export const setTrendVenue = venue => ({
-  type: 'SET_TREND_VENUE',
-  venue,
-});
-
-export const setTrendChart = chart => ({
-  type: 'SET_TREND_CHART',
-  chart,
-});
-
-export const getTrendStats = trendQueries => (dispatch) => {
-  api.getTrendStats(trendQueries).then((data) => {
+export const getImpactStats = queries => (dispatch) => {
+  api.getImpactStats(queries).then((data) => {
     dispatch({
-      type: 'SET_TREND_DATA',
+      type: 'SET_IMPACT_DATA',
       data,
     });
   });

@@ -34,7 +34,10 @@ export default {
     return get(`top/${aggregator}/${metric}?${encodeQueries(filters)}`);
   },
 
-  getTrendStats: ({ type, venue }) => get(`venue/${encodeURIComponent(venue.trim())}/${type.toLowerCase()}`),
+  getImpactStats: (params) => {
+    console.log('querying', `year/${params.year}/impact-factor?top=${params.count}`);
+    return get(`year/${params.year}/impact-factor?top=${params.count}`);
+  },
   getCitationWeb: ({ paper, depth }) => get(`paper/${encodeURIComponent(paper.trim())}/web-citation?depth=${depth}`),
   getTopVenues: ({ count, year }) => get(`year/${year}/avg-cite?top=${count}`),
 };
