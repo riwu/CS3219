@@ -4,6 +4,7 @@ const { queryCitationYearMap } = require('../db/compare');
 const { queryRootPaper, queryGraph } = require('../db/web-citation');
 const { queryTop } = require('../db/top');
 const { queryImpactFactor } = require('../db/impact-factor');
+const { queryVenues } = require('../db/venues');
 
 const router = express.Router();
 
@@ -212,6 +213,20 @@ router.get('/year/:year/impact-factor', async (req, res) => {
 
   const result = await queryImpactFactor(yearInt, parsedTop);
   res.send(_(result).keyBy('_id').mapValues('impactFactor').value());
+});
+
+/**
+ * Venues API
+ *
+ * Returns all venues as an array.
+ *
+ * Parameters: None
+ * Returns: An array of all venues
+ *  ['ArXiv', ...]
+ */
+router.get('/venues', async (req, res) => {
+  const result = await queryVenues();
+  res.send(result.map(venue => venue._id));
 });
 
 module.exports = router;
