@@ -1,5 +1,5 @@
 ## URL
-https://vis.netlify.com/
+https://vis.wangriwu.com/
 
 ## Import data to MongoDB
 Download from http://labs.semanticscholar.org/corpus/ and extract the first 200000 lines  
