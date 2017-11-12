@@ -39,5 +39,5 @@ export default {
     return get(`year/${params.year}/impact-factor?top=${params.count}`);
   },
   getCitationWeb: ({ paper, depth }) => get(`paper/${encodeURIComponent(paper.trim())}/web-citation?depth=${depth}`),
-  getTopVenues: ({ count, year }) => get(`year/${year}/avg-cite?top=${count}`),
+  getCompareTrends: ({ count, year }) => get(`year/${year}/avg-cite?top=${count}`),
 };

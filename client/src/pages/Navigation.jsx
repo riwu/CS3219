@@ -8,7 +8,7 @@ const Navigation = props => (
   <Nav bsStyle="tabs" className="Navigation">
     {[
       { path: '/', title: 'Top stats' },
-      { path: '/StatsByYear', title: 'Top stats by year' },
+      { path: '/Compare', title: 'Compare trends' },
       { path: '/ImpactFactor', title: 'Impact factor' },
       { path: '/CitationWeb', title: 'Citation web' },
     ].map(({ path, title }) => (

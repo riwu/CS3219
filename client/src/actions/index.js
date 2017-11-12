@@ -39,25 +39,16 @@ export const getImpactStats = queries => (dispatch) => {
   });
 };
 
-export const setVenueCount = count => ({
-  type: 'SET_VENUE_COUNT',
-  count,
+export const setTrendValue = (field, value) => ({
+  type: 'SET_TREND_VALUE',
+  field,
+  value,
 });
 
-export const setVenueYear = year => ({
-  type: 'SET_VENUE_YEAR',
-  year,
-});
-
-export const setVenueChart = chart => ({
-  type: 'SET_VENUE_CHART',
-  chart,
-});
-
-export const getTopVenues = venueQueries => (dispatch) => {
-  api.getTopVenues(venueQueries).then((data) => {
+export const getTrendStats = venueQueries => (dispatch) => {
+  api.getTrendStats(venueQueries).then((data) => {
     dispatch({
-      type: 'SET_VENUE_DATA',
+      type: 'SET_TREND_DATA',
       data,
     });
   });
