@@ -7,6 +7,7 @@ import { persistStore, autoRehydrate } from 'redux-persist';
 import thunk from 'redux-thunk';
 import reducer from './reducers';
 import Routes from './pages/routes';
+import { getVenues } from './actions';
 
 const history = createHistory();
 const middleware = [routerMiddleware(history), thunk];
@@ -20,6 +21,8 @@ const store = createStore(
 persistStore(store, {
   blacklist: ['route'],
 });
+
+store.dispatch(getVenues());
 
 const App = () => (
   <Provider store={store}>

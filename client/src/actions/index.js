@@ -1,5 +1,14 @@
 import api from './api';
 
+export const getVenues = () => (dispatch) => {
+  api.getVenues().then((venues) => {
+    dispatch({
+      type: 'RECEIVE_VENUES',
+      venues,
+    });
+  });
+};
+
 export const setTopCount = count => ({
   type: 'SET_TOP_COUNT',
   count,
