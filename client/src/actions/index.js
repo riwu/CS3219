@@ -9,28 +9,14 @@ export const getVenues = () => (dispatch) => {
   });
 };
 
-export const setTopCount = count => ({
-  type: 'SET_TOP_COUNT',
-  count,
+export const setTopValue = (field, value) => ({
+  type: 'SET_TOP_Value',
+  field,
+  value,
 });
 
-export const setTopType = topType => ({
-  type: 'SET_TOP_TYPE',
-  topType,
-});
-
-export const setTopVenue = venue => ({
-  type: 'SET_TOP_VENUE',
-  venue,
-});
-
-export const setTopChart = chart => ({
-  type: 'SET_TOP_CHART',
-  chart,
-});
-
-export const getTopStats = topQueries => (dispatch) => {
-  api.getTopStats(topQueries).then((data) => {
+export const getTopStats = params => (dispatch) => {
+  api.getTopStats(params).then((data) => {
     dispatch({
       type: 'SET_TOP_DATA',
       data,
