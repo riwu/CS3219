@@ -23,3 +23,8 @@ db.a5papers.aggregate([
   { $addFields: { outCitations: '$outCitations.id' } },
   { $out: 'a5papers' },
 ]);
+
+db.a5papers.find({}, { title: 1 }).forEach((doc) => {
+  const newTitle = doc.title.trim();
+  db.collection.update({ _id: doc._id }, { $set: { title: newTitle } });
+});
