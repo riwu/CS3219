@@ -10,12 +10,16 @@ const CompareTrends = props => (
     <div style={{ width: '85%' }}>
       {props.title &&
         <h3 className="app-filterTitle">
-          Trends for
+          Citations for {' '}
           <span className="app-filterTitleSpecial">
-            {props.title.conferences.join(',')}
-          </span>
-          Top <span className="app-filterTitleSpecial">{props.title.count}</span> for
-          year <span className="app-filterTitleSpecial">{props.title.year}</span>
+            {props.title.conferences
+              .filter(([conf, year]) => conf.trim() !== '' && year.trim() !== '')
+              .map(([venue, year]) => `${venue} (${year})`).join(', ')}
+          </span> from year <span className="app-filterTitleSpecial">{props.title.startYear}</span> to
+          year <span className="app-filterTitleSpecial">{props.title.endYear}</span>
+          {props.title.filterConference &&
+          <span> for papers cited from <span className="app-filterTitleSpecial">{props.title.filterConference.label}</span></span>
+          }
         </h3>
       }
       {props.data && props.chart === 'Bar Chart' && <BarChart data={props.data} />}
