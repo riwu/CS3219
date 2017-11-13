@@ -5,16 +5,18 @@ import './filter.css';
 import CompareTrendsForm from './CompareTrendsFormContainer';
 
 const CompareTrends = props => (
-  <div>
+  <div style={{ display: 'flex' }}>
     <CompareTrendsForm />
-    {props.title &&
-      <h3 className="app-filterTitle">
-        Top <span className="app-filterTitleSpecial">{props.title.count}</span> for
-        year <span className="app-filterTitleSpecial">{props.title.year}</span>
-      </h3>
-    }
-    {props.data && props.chart === 'Bar Chart' && <BarChart data={props.data} />}
-    {props.data && props.chart === 'Line Chart' && <LineChart data={props.data} />}
+    <div style={{ width: '85%' }}>
+      {props.title &&
+        <h3 className="app-filterTitle">
+          Top <span className="app-filterTitleSpecial">{props.title.count}</span> for
+          year <span className="app-filterTitleSpecial">{props.title.year}</span>
+        </h3>
+      }
+      {props.data && props.chart === 'Bar Chart' && <BarChart data={props.data} />}
+      {props.data && props.chart === 'Line Chart' && <LineChart data={props.data} />}
+    </div>
   </div>
 );
 

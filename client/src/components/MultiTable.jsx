@@ -32,7 +32,7 @@ const MultiTable = props => (
           {(index > 0) && (index < props.compareTrends.conferences.length - 1) &&
             <td>
               <OverlayTrigger
-                overlay={<Tooltip>Click to remove row</Tooltip>}
+                overlay={<Tooltip id="Remove row">Click to remove row</Tooltip>}
               >
                 <Glyphicon
                   style={{ cursor: 'pointer', color: 'red' }}

@@ -5,7 +5,7 @@ import './filter.css';
 import MultiTable from '../components/MultiTableContainer';
 
 const CompareTrendsFilter = props => (
-  <Form inline className="app-form">
+  <Form className="app-form" style={{ flexDirection: 'column' }}>
     <MultiTable />
     <div>
       <FormGroup>
