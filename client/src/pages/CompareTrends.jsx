@@ -61,7 +61,6 @@ const CompareTrends = props => (
         year <span className="app-filterTitleSpecial">{props.compareTrends.title.year}</span>
       </h3>
     }
-    {JSON.stringify(props.compareTrends.data)}
     {props.compareTrends.data && props.compareTrends.chart === 'Bar Chart' && <BarChart data={props.compareTrends.data} />}
     {props.compareTrends.data && props.compareTrends.chart === 'Pie Chart' && <PieChart data={props.compareTrends.data} />}
     {props.compareTrends.data && props.compareTrends.chart === 'Line Chart' && <LineChart data={props.compareTrends.data} />}

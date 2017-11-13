@@ -39,6 +39,7 @@ export default {
         return arr;
       }, []); // [ { name: year, confLabel1: count, confLabel2: count, ... }]
     });
+    // TODO : add in 0 for papers with missing years
   },
   getTopStats: (params) => {
     const aggregator = {
@@ -58,7 +59,8 @@ export default {
 
     const filters = [['n', params.count], ['venue', params.venue], ['author', params.author], ['title', params.paper]]
       .filter(([key, value]) => value.trim() !== '');
-    return get(`top/${aggregator}/${metric}?${encodeQueries(filters)}`);
+    return get(`top/${aggregator}/${metric}?${encodeQueries(filters)}`).then(data =>
+      Object.entries(data).map(([key, value]) => ({ name: key, value: Math.round(value) })));
   },
 
   getImpactStats: params => get(`year/${params.year}/impact-factor?top=${params.count}`),

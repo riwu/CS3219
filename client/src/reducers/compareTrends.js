@@ -4,7 +4,7 @@ const initialState = {
   ],
   startYear: '2000',
   endYear: '2017',
-  data: null,
+  data: [],
   chart: 'Pie Chart',
 };
 
