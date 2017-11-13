@@ -70,7 +70,8 @@ export default {
       'Number of venues': 'numVenues',
     }[params.metric];
 
-    const filters = [['n', params.count], ['venue', params.venue.label], ['author', params.author], ['title', params.paper]]
+    const filters = [['n', params.count], ['venue', (params.venue || {}).label || ''],
+      ['author', params.author], ['title', (params.paper || {}).label || '']]
       .filter(([key, value]) => value.trim() !== '');
     return get(`top/${aggregator}/${metric}?${encodeQueries(filters)}`).then(data => mapToArr(data));
   },

@@ -10,6 +10,10 @@ const CompareTrends = props => (
     <div style={{ width: '85%' }}>
       {props.title &&
         <h3 className="app-filterTitle">
+          Trends for
+          <span className="app-filterTitleSpecial">
+            {props.title.conferences.join(',')}
+          </span>
           Top <span className="app-filterTitleSpecial">{props.title.count}</span> for
           year <span className="app-filterTitleSpecial">{props.title.year}</span>
         </h3>

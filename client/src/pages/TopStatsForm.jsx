@@ -1,6 +1,9 @@
 import React from 'react';
 import 'react-select/dist/react-select.css';
 import Select from 'react-select';
+import 'react-virtualized/styles.css';
+import 'react-virtualized-select/styles.css';
+import VirtualizedSelect from 'react-virtualized-select';
 
 import { Form, FormGroup, ControlLabel, FormControl, DropdownButton, MenuItem, Button } from 'react-bootstrap';
 import './filter.css';
@@ -15,7 +18,7 @@ const TopStatsForm = props => (
             type="number"
             value={props.topStats.count}
             min={1}
-            max={1000}
+            max={99}
             onChange={e => props.setTopValue('count', e.target.value)}
           />
         </FormGroup>
@@ -80,7 +83,7 @@ const TopStatsForm = props => (
         <FormGroup style={{ display: 'flex', alignItems: 'center' }}>
           <ControlLabel className="app-controlLabel">Venue</ControlLabel>
           <Select
-            style={{ width: '250px' }}
+            style={{ width: '200px' }}
             options={props.venues}
             value={props.topStats.venue}
             onChange={value => props.setTopValue('venue', value)}
@@ -89,12 +92,13 @@ const TopStatsForm = props => (
         </FormGroup>
         <FormGroup style={{ display: 'flex', alignItems: 'center' }}>
           <ControlLabel className="app-controlLabel">Paper</ControlLabel>
-          <Select
-            style={{ width: '200px' }}
+          <VirtualizedSelect
+            style={{ width: '350px' }}
             options={props.titles}
             value={props.topStats.paper}
             onChange={value => props.setTopValue('paper', value)}
             placeholder="Search for a paper"
+            optionHeight={80}
           />
         </FormGroup>
         <FormGroup>

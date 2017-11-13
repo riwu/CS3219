@@ -1,5 +1,7 @@
 import React from 'react';
 import { FormControl, Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import 'react-select/dist/react-select.css';
+import Select from 'react-select';
 import './MultiTable.css';
 
 const MultiTable = props => (
@@ -14,19 +16,21 @@ const MultiTable = props => (
       {props.compareTrends.conferences.map(([conf, year], index) => (
         <tr key={index}>
           <td>
-            <FormControl
-              value={conf}
-              onChange={e => props.setTrendRowValue(0, index, e.target.value)}
-              autoComplete="on"
-              placeholder="Enter a venue"
+            <Select
+              style={{ width: '200px' }}
+              options={props.venues}
+              value={{ label: conf, value: conf }}
+              onChange={value => props.setTrendRowValue(0, index, (value || {}).value || '')}
+              placeholder="Search for a conference"
             />
           </td>
           <td>
             <FormControl
+              style={{ width: '70px' }}
               type="number"
               value={year}
               min={1}
-              max={99999}
+              max={9999}
               onChange={e => props.setTrendRowValue(1, index, e.target.value)}
             />
           </td>
