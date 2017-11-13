@@ -1,0 +1,7 @@
+.MultiTable th {
+  text-align: center;
+}
+
+.MultiTable th, .MultiTable td {
+  padding: 5px;
+}

@@ -5,7 +5,14 @@ import './filter.css';
 import MultiTable from '../components/MultiTableContainer';
 
 const CompareTrendsFilter = props => (
-  <Form className="app-form" style={{ flexDirection: 'column' }}>
+  <Form
+    className="app-form"
+    style={{
+      flexDirection: 'column',
+      alignItems: 'center',
+      textAlign: 'center',
+    }}
+  >
     <MultiTable />
     <div>
       <FormGroup>
@@ -20,7 +27,7 @@ const CompareTrendsFilter = props => (
       </FormGroup>
       {' '}
       <FormGroup>
-        <ControlLabel className="app-controlLabel">to</ControlLabel>
+        <ControlLabel className="app-controlLabel">to year</ControlLabel>
         <FormControl
           type="number"
           value={props.compareTrends.endYear}

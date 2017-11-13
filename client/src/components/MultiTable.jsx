@@ -1,12 +1,13 @@
 import React from 'react';
 import { FormControl, Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import './MultiTable.css';
 
 const MultiTable = props => (
-  <table>
+  <table className="MultiTable">
     <thead>
       <tr>
-        <td>Conference</td>
-        <td>Year</td>
+        <th>Conference</th>
+        <th>Year</th>
       </tr>
     </thead>
     <tbody>
