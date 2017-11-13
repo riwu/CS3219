@@ -1,10 +1,9 @@
 import { connect } from 'react-redux';
-import CitationWeb from './CitationWeb';
+import CitationWebForm from './CitationWebForm';
 import { setCitationPaper, getCitationWeb, setCitationDepth } from '../actions';
 
 const mapStateToProps = state => ({
-  data: state.citationWeb.data,
-  title: state.citationWeb.title,
+  citationWeb: state.citationWeb,
 });
 
 export default connect(
@@ -12,4 +11,4 @@ export default connect(
   {
     setCitationPaper, getCitationWeb, setCitationDepth,
   },
-)(CitationWeb);
+)(CitationWebForm);
