@@ -32,7 +32,8 @@ export default {
       arr.push(['year', year]);
       return arr;
     }, []);
-    const queries = [['start', params.startYear], ['end', params.endYear]];
+    const queries = [['start', params.startYear], ['end', params.endYear],
+      ['filterConference', (params.filterConference || {}).label]];
     const getLabel = (conference, year) => `${conference} (${year})`;
     return get(`compare?${encodeQueries([...conferenceQuery, ...queries])}`).then((data) => {
       const yearMap = data.reduce((obj, fields) => {
@@ -80,9 +81,7 @@ export default {
     return get(`top/${aggregator}/${metric}?${encodeQueries(filters)}`).then(data => mapToArr(data, params.metric));
   },
 
-  getImpactStats: (params) => {
-    const queries = encodeQueries([['top', params.count], ['filterConference', (params.filterConference || {}).label]]);
-    return get(`year/${params.year}/impact-factor?${queries}`).then(data => mapToArr(data, 'Impact factor'));
-  },
+  getImpactStats: params => get(`year/${params.year}/impact-factor?top=${params.count}`)
+    .then(data => mapToArr(data, 'Impact factor')),
   getCitationWeb: ({ paper, depth }) => get(`paper/${encodeURIComponent(paper.trim())}/web-citation?depth=${depth}`),
 };

@@ -4,6 +4,7 @@ import { setTrendValue, getTrendStats } from '../actions';
 
 const mapStateToProps = state => ({
   compareTrends: state.compareTrends,
+  venues: state.venues,
 });
 
 export default connect(

@@ -47,7 +47,7 @@ const CompareTrendsFilter = props => (
       <Select
         style={{ width: '200px' }}
         options={props.venues}
-        value={props.filterConference}
+        value={props.compareTrends.filterConference}
         onChange={value => props.setTrendValue('filterConference', value)}
         placeholder="Search for a conference"
       />
