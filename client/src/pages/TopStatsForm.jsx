@@ -1,11 +1,7 @@
 import React from 'react';
-import 'react-select/dist/react-select.css';
-import Select from 'react-select';
-import 'react-virtualized/styles.css';
-import 'react-virtualized-select/styles.css';
-import VirtualizedSelect from 'react-virtualized-select';
-
 import { Form, FormGroup, ControlLabel, FormControl, DropdownButton, MenuItem, Button } from 'react-bootstrap';
+import VenueInput from '../components/VenueInput';
+import TitleInput from '../components/TitleInput';
 import './filter.css';
 
 const TopStatsForm = props => (
@@ -27,7 +23,7 @@ const TopStatsForm = props => (
             id="Top Type"
             title={props.topStats.aggregator}
           >
-            {['Authors', 'Venues', 'Papers', 'Years'].map(aggregator => (
+            {['Venues', 'Papers', 'Authors', 'Years'].map(aggregator => (
               <MenuItem
                 key={aggregator}
                 onClick={() => props.setTopValue('aggregator', aggregator)}
@@ -91,9 +87,7 @@ const TopStatsForm = props => (
         {props.topStats.aggregator !== 'Venues' &&
         <FormGroup style={{ display: 'flex', alignItems: 'center' }}>
           <ControlLabel className="app-controlLabel">Venue</ControlLabel>
-          <Select
-            style={{ width: '200px' }}
-            options={props.venues}
+          <VenueInput
             value={props.topStats.venue}
             onChange={value => props.setTopValue('venue', value)}
             placeholder="Search for a venue"
@@ -103,13 +97,9 @@ const TopStatsForm = props => (
         {props.topStats.aggregator !== 'Papers' &&
         <FormGroup style={{ display: 'flex', alignItems: 'center' }}>
           <ControlLabel className="app-controlLabel">Paper</ControlLabel>
-          <VirtualizedSelect
-            style={{ width: '350px' }}
-            options={props.titles}
+          <TitleInput
             value={props.topStats.paper}
-            onChange={value => props.setTopValue('paper', value)}
-            placeholder="Search for a paper"
-            optionHeight={({ option }) => option.label.length * 0.7}
+            onChange={props.setTopValue}
           />
         </FormGroup>
         }

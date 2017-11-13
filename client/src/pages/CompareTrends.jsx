@@ -1,9 +1,7 @@
 import React from 'react';
-import BarChart from '../components/BarChart';
-import LineChart from '../components/LineChart';
-import AreaChart from '../components/AreaChart';
-import './filter.css';
+import AllCharts from '../components/AllCharts';
 import CompareTrendsForm from './CompareTrendsFormContainer';
+import './filter.css';
 
 const CompareTrends = props => (
   <div style={{ display: 'flex' }}>
@@ -23,9 +21,7 @@ const CompareTrends = props => (
           }
         </h3>
       }
-      {props.data && props.chart === 'Bar Chart' && <BarChart data={props.data} />}
-      {props.data && props.chart === 'Line Chart' && <LineChart data={props.data} />}
-      {props.data && props.chart === 'Area Chart' && <AreaChart data={props.data} />}
+      <AllCharts data={props.data} chart={props.chart} />
     </div>
   </div>
 );

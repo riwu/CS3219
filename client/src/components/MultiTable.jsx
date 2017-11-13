@@ -1,7 +1,7 @@
 import React from 'react';
-import { FormControl, Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap';
-import 'react-select/dist/react-select.css';
-import Select from 'react-select';
+import { Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import VenueInput from './VenueInput';
+import YearInput from './YearInput';
 import './MultiTable.css';
 
 const MultiTable = props => (
@@ -16,22 +16,16 @@ const MultiTable = props => (
       {props.compareTrends.conferences.map(([conf, year], index) => (
         <tr key={index}>
           <td>
-            <Select
-              style={{ width: '200px' }}
-              options={props.venues}
+            <VenueInput
               value={conf.trim() === '' ? null : { label: conf, value: conf }}
               onChange={value => props.setTrendRowValue(0, index, (value || {}).value || '')}
               placeholder="Search for a conference"
             />
           </td>
           <td>
-            <FormControl
-              style={{ width: '70px' }}
-              type="number"
+            <YearInput
               value={year}
-              min={1}
-              max={9999}
-              onChange={e => props.setTrendRowValue(1, index, e.target.value)}
+              onChange={value => props.setTrendRowValue(1, index, value)}
             />
           </td>
           {(index > 0) && (index < props.compareTrends.conferences.length - 1) &&

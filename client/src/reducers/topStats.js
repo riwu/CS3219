@@ -1,11 +1,11 @@
 const initialState = {
   count: '10',
-  aggregator: 'Authors',
+  aggregator: 'Venues',
   metric: 'Number of papers',
   venue: null,
-  paper: null,
+  paper: '',
   author: '',
-  data: [],
+  data: null,
   chart: 'Bar Chart',
 };
 

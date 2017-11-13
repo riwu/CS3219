@@ -6,21 +6,16 @@ const initialState = {
 
 const citationWeb = (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_CITATION_PAPER':
+    case 'SET_CITATION_VALUE':
       return {
         ...state,
-        paper: action.paper,
+        [action.field]: action.value,
       };
     case 'SET_CITATION_DATA':
       return {
         ...state,
         title: state,
         data: action.data,
-      };
-    case 'SET_CITATION_DEPTH':
-      return {
-        ...state,
-        depth: action.depth,
       };
     default:
       return state;

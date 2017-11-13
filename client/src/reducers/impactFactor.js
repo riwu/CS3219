@@ -1,7 +1,7 @@
 const initialState = {
   count: 10,
   year: 2014,
-  data: [],
+  data: null,
   chart: 'Pie Chart',
 };
 

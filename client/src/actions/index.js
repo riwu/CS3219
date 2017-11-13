@@ -75,9 +75,10 @@ export const getTrendStats = venueQueries => (dispatch) => {
   });
 };
 
-export const setCitationPaper = paper => ({
-  type: 'SET_CITATION_PAPER',
-  paper,
+export const setCitationValue = (field, value) => ({
+  type: 'SET_CITATION_VALUE',
+  field,
+  value,
 });
 
 export const getCitationWeb = paper => (dispatch) => {
@@ -93,8 +94,3 @@ export const getCitationWeb = paper => (dispatch) => {
     });
   });
 };
-
-export const setCitationDepth = depth => ({
-  type: 'SET_CITATION_DEPTH',
-  depth,
-});

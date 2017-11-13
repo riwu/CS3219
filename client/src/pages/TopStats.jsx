@@ -1,8 +1,5 @@
 import React from 'react';
-import BarChart from '../components/BarChart';
-import PieChart from '../components/PieChart';
-import LineChart from '../components/LineChart';
-import AreaChart from '../components/AreaChart';
+import AllCharts from '../components/AllCharts';
 import TopStatsForm from './TopStatsFormContainer';
 import './filter.css';
 
@@ -20,7 +17,7 @@ const TopStats = props => (
         }
         {props.title.paper &&
           <span>
-            {' '}for paper <span className="app-filterTitleSpecial">{props.title.paper.label}</span>
+            {' '}for paper <span className="app-filterTitleSpecial">{props.title.paper}</span>
           </span>
         }
         {props.title.author.trim() &&
@@ -30,10 +27,7 @@ const TopStats = props => (
         }
       </h3>
     }
-    {props.data && props.chart === 'Bar Chart' && <BarChart data={props.data} />}
-    {props.data && props.chart === 'Pie Chart' && <PieChart data={props.data} />}
-    {props.data && props.chart === 'Line Chart' && <LineChart data={props.data} />}
-    {props.data && props.chart === 'Area Chart' && <AreaChart data={props.data} />}
+    <AllCharts data={props.data} chart={props.chart} />
   </div>
 );
 

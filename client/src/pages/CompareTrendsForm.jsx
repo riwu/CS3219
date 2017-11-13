@@ -1,10 +1,10 @@
 import React from 'react';
-import { Form, FormGroup, ControlLabel, FormControl, Button, DropdownButton,
+import { Form, FormGroup, ControlLabel, Button, DropdownButton,
   MenuItem } from 'react-bootstrap';
-import 'react-select/dist/react-select.css';
-import Select from 'react-select';
-import './filter.css';
+import VenueInput from '../components/VenueInput';
 import MultiTable from '../components/MultiTableContainer';
+import YearInput from '../components/YearInput';
+import './filter.css';
 
 const CompareTrendsFilter = props => (
   <Form
@@ -19,34 +19,24 @@ const CompareTrendsFilter = props => (
     <div>
       <FormGroup>
         <ControlLabel className="app-controlLabel">From year </ControlLabel>
-        <FormControl
-          type="number"
+        <YearInput
           value={props.compareTrends.startYear}
-          min={1}
-          max={9999}
-          style={{ width: '70px' }}
-          onChange={e => props.setTrendValue('startYear', e.target.value)}
+          onChange={value => props.setTrendValue('startYear', value)}
         />
       </FormGroup>
       {' '}
       <FormGroup>
         <ControlLabel className="app-controlLabel">to year</ControlLabel>
-        <FormControl
-          type="number"
+        <YearInput
           value={props.compareTrends.endYear}
-          min={1}
-          max={9999}
-          style={{ width: '70px' }}
-          onChange={e => props.setTrendValue('endYear', e.target.value)}
+          onChange={value => props.setTrendValue('endYear', value)}
         />
       </FormGroup>
     </div>
 
     <FormGroup>
       <ControlLabel className="app-controlLabel">Filter conference</ControlLabel>
-      <Select
-        style={{ width: '200px' }}
-        options={props.venues}
+      <VenueInput
         value={props.compareTrends.filterConference}
         onChange={value => props.setTrendValue('filterConference', value)}
         placeholder="Search for a conference"

@@ -1,11 +1,13 @@
 const initialState = {
   conferences: [
-    ['ArXiv', '2014'],
+    ['ArXiv', '2010'],
+    ['PloS one', '2011'],
+    ['PloS one', '2008'],
     ['', ''],
   ],
   startYear: '2000',
-  endYear: '2017',
-  data: [],
+  endYear: '2014',
+  data: null,
   chart: 'Line Chart',
   filterConference: null,
 };

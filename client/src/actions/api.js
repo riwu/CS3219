@@ -83,7 +83,7 @@ export default {
     }[params.metric];
 
     const filters = [['n', params.count], ['venue', (params.venue || {}).label || ''],
-      ['author', params.author], ['title', (params.paper || {}).label || '']];
+      ['author', params.author], ['title', params.paper]];
     return get(`top/${aggregator}/${metric}?${encodeQueries(filters)}`)
       .then(data => mapToArr(data, params.metric, params.aggregator === 'Years'));
   },

@@ -1,10 +1,7 @@
 import React from 'react';
-import BarChart from '../components/BarChart';
-import PieChart from '../components/PieChart';
-import LineChart from '../components/LineChart';
-import AreaChart from '../components/AreaChart';
-import './filter.css';
+import AllCharts from '../components/AllCharts';
 import ImpactFactorForm from './ImpactFactorFormContainer';
+import './filter.css';
 
 const ImpactFactor = props => (
   <div>
@@ -15,10 +12,7 @@ const ImpactFactor = props => (
         venue in year <span className="app-filterTitleSpecial">{props.title.year}</span>
       </h3>
     }
-    {props.data && props.chart === 'Bar Chart' && <BarChart data={props.data} />}
-    {props.data && props.chart === 'Pie Chart' && <PieChart data={props.data} />}
-    {props.data && props.chart === 'Line Chart' && <LineChart data={props.data} />}
-    {props.data && props.chart === 'Area Chart' && <AreaChart data={props.data} />}
+    <AllCharts data={props.data} chart={props.chart} />
   </div>
 );
 

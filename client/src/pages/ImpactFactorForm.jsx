@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, FormGroup, ControlLabel, FormControl, Button, DropdownButton, MenuItem } from 'react-bootstrap';
+import YearInput from '../components/YearInput';
 import './filter.css';
 
 const ImpactFactorForm = props => (
@@ -19,13 +20,9 @@ const ImpactFactorForm = props => (
         {' '}
         <FormGroup>
           <ControlLabel className="app-controlLabel">venue in Year</ControlLabel>
-          <FormControl
-            type="number"
+          <YearInput
             value={props.impactFactor.year}
-            min={1}
-            max={9999}
-            style={{ width: '70px' }}
-            onChange={e => props.setImpactValue('year', e.target.value)}
+            onChange={value => props.setImpactValue('year', value)}
           />
         </FormGroup>
       </div>
