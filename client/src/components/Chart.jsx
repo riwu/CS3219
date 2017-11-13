@@ -1,6 +1,8 @@
 import React from 'react';
 import { XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
+const COLORS = ['blue', 'red', 'black', 'purple', 'grey', 'navy',
+  'fuchsia', 'maroon', 'teal', 'orange'];
 const X_AXIS_KEY = 'name';
 const height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 const Chart = ({ data, ChartType, ChartFill }) => {
@@ -13,8 +15,8 @@ const Chart = ({ data, ChartType, ChartFill }) => {
         <XAxis dataKey={X_AXIS_KEY} />
         <YAxis />
         <Tooltip />
-        {Object.keys(data[0]).filter(key => key !== X_AXIS_KEY).map(key => (
-          <ChartFill key={key} type="monotone" dataKey={key} fill="#8884d8" />
+        {Object.keys(data[0]).filter(key => key !== X_AXIS_KEY).map((key, index) => (
+          <ChartFill key={key} type="monotone" dataKey={key} fill={COLORS[index]} stroke={COLORS[index]} />
         ))}
       </ChartType>
     </ResponsiveContainer>
