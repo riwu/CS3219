@@ -17,8 +17,8 @@ const mapToArr = obj => Object.entries(obj).map(([key, value]) =>
 export default {
   getVenues: () => get('venues').then(venues =>
     venues.map(venue => ({ label: venue, value: venue }))),
-  getTitles: () => get('venues').then(venues =>
-    venues.map(venue => ({ label: venue, value: venue }))),
+  getTitles: () => get('titles').then(titles =>
+    titles.map(title => ({ label: title, value: title }))),
   getTrendStats: (params) => {
     const conferences = params.conferences
       .filter(([conf, year]) => conf.trim() !== '' && year.trim() !== '');

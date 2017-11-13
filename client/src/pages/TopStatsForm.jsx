@@ -1,8 +1,6 @@
 import React from 'react';
 import 'react-select/dist/react-select.css';
-import 'react-virtualized/styles.css';
-import 'react-virtualized-select/styles.css';
-import VirtualizedSelect from 'react-virtualized-select';
+import Select from 'react-select';
 
 import { Form, FormGroup, ControlLabel, FormControl, DropdownButton, MenuItem, Button } from 'react-bootstrap';
 import './filter.css';
@@ -81,21 +79,22 @@ const TopStatsForm = props => (
         <h4 style={{ color: '#0084bf' }}>Optional filters</h4>
         <FormGroup style={{ display: 'flex', alignItems: 'center' }}>
           <ControlLabel className="app-controlLabel">Venue</ControlLabel>
-          <VirtualizedSelect
-            style={{ width: '300px' }}
+          <Select
+            style={{ width: '250px' }}
             options={props.venues}
             value={props.topStats.venue}
             onChange={value => props.setTopValue('venue', value)}
-            placeholder="Enter a venue"
+            placeholder="Search for a venue"
           />
         </FormGroup>
-        <FormGroup>
+        <FormGroup style={{ display: 'flex', alignItems: 'center' }}>
           <ControlLabel className="app-controlLabel">Paper</ControlLabel>
-          <FormControl
+          <Select
+            style={{ width: '200px' }}
+            options={props.titles}
             value={props.topStats.paper}
-            onChange={e => props.setTopValue('paper', e.target.value)}
-            autoComplete="on"
-            placeholder="Enter a paper title"
+            onChange={value => props.setTopValue('paper', value)}
+            placeholder="Search for a paper"
           />
         </FormGroup>
         <FormGroup>

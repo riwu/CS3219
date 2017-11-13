@@ -5,6 +5,7 @@ import { setTopValue, getTopStats } from '../actions';
 const mapStateToProps = state => ({
   topStats: state.topStats,
   venues: state.venues,
+  titles: state.titles,
 });
 
 export default connect(

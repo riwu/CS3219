@@ -9,6 +9,15 @@ export const getVenues = () => (dispatch) => {
   });
 };
 
+export const getTitles = () => (dispatch) => {
+  api.getTitles().then((titles) => {
+    dispatch({
+      type: 'RECEIVE_TITLES',
+      titles,
+    });
+  });
+};
+
 export const setTopValue = (field, value) => ({
   type: 'SET_TOP_VALUE',
   field,
