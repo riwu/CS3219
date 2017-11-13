@@ -17,17 +17,18 @@ export default {
   getVenues: () => get('venues'),
   getTrendStats: (params) => {
     const conferences = params.conferences
-      .filter(([conf, year]) => conf.trim() !== '' && year.trim() !== '')
-      .reduce((arr, [conf, year]) => {
-        arr.push(['conference', conf]);
-        arr.push(['year', year]);
-        return arr;
-      }, []);
+      .filter(([conf, year]) => conf.trim() !== '' && year.trim() !== '');
+    const conferenceQuery = conferences.reduce((arr, [conf, year]) => {
+      arr.push(['conference', conf]);
+      arr.push(['year', year]);
+      return arr;
+    }, []);
     const queries = [['start', params.startYear], ['end', params.endYear]];
-    return get(`compare?${encodeQueries([...conferences, ...queries])}`).then((data) => {
+    const getLabel = (conference, year) => `${conference} (${year})`;
+    return get(`compare?${encodeQueries([...conferenceQuery, ...queries])}`).then((data) => {
       const yearMap = data.reduce((obj, fields) => {
         Object.entries(fields.citations).forEach(([year, count]) => {
-          const label = `${fields.conference} (${fields.year})`;
+          const label = getLabel(fields.conference, fields.year);
           obj[year] = { // eslint-disable-line
             ...obj[year],
             [label]: ((obj[year] || {})[label] || 0) + count,
@@ -35,13 +36,19 @@ export default {
         });
         return obj;
       }, {}); // { [year]: { confLabel: count } }
-      console.log('year map', yearMap);
+      console.log('year map', yearMap, conferences);
       return Object.entries(yearMap).reduce((arr, [year, value]) => {
-        arr.push({ name: year, ...value });
+        arr.push({
+          name: year,
+          ...conferences.reduce((obj, [conf, confYear]) => {
+            const label = getLabel(conf, confYear);
+            obj[label] = value[label] || 0; // eslint-disable-line
+            return obj;
+          }, {}),
+        });
         return arr;
       }, []); // [ { name: year, confLabel1: count, confLabel2: count, ... }]
     });
-    // TODO : add in 0 for papers with missing years
   },
   getTopStats: (params) => {
     const aggregator = {
