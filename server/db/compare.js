@@ -2,16 +2,23 @@ const { connection, papersCollection } = require('./connection');
 
 function computeIntervalMatchStage(start, end, property) {
   if (start === null && end === null) {
-    return { $match: { [property]: { $exists: true } } };
+    return [{ $match: { [property]: { $exists: true } } }];
   }
 
   const startFilter = start === null ? {} : { $gte: start };
   const endFilter = end === null ? {} : { $lte: end };
 
-  return { $match: { [property]: Object.assign(startFilter, endFilter, { $exists: true }) } };
+  return [{ $match: { [property]: Object.assign(startFilter, endFilter, { $exists: true }) } }];
 }
 
-async function queryCitationYearMap(venue, year, start, end) {
+function computeVenueMatchStage(citeVenue, property) {
+  if (citeVenue === null) {
+    return [];
+  }
+  return [{ $match: { [property]: citeVenue } }];
+}
+
+async function queryCitationYearMap(venue, year, start, end, citeVenue) {
   const db = await connection;
 
   return db.collection(papersCollection)
@@ -29,7 +36,8 @@ async function queryCitationYearMap(venue, year, start, end) {
           },
         },
         { $unwind: '$outCitations_docs' },
-        computeIntervalMatchStage(start, end, 'outCitations_docs.year'),
+        ...computeIntervalMatchStage(start, end, 'outCitations_docs.year'),
+        ...computeVenueMatchStage(citeVenue, 'outCitations_docs.venue'),
         { $project: { cite_year: '$outCitations_docs.year' } },
         {
           $group: {
