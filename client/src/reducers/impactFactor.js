@@ -2,7 +2,7 @@ const initialState = {
   count: 10,
   year: 2014,
   data: [],
-  chart: 'Line Chart',
+  chart: 'Pie Chart',
 };
 
 const impactFactor = (state = initialState, action) => {

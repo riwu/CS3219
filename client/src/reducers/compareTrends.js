@@ -6,7 +6,7 @@ const initialState = {
   startYear: '2000',
   endYear: '2017',
   data: [],
-  chart: 'Pie Chart',
+  chart: 'Line Chart',
 };
 
 const compareTrends = (state = initialState, action) => {

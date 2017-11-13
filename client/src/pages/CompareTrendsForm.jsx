@@ -35,7 +35,7 @@ const CompareTrendsFilter = props => (
       id="Chart Type"
       title={props.compareTrends.chart}
     >
-      {['Bar Chart', 'Line Chart'].map(type => (
+      {['Line Chart', 'Bar Chart'].map(type => (
         <MenuItem
           key={type}
           onClick={() => props.setTrendValue('chart', type)}

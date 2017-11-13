@@ -33,7 +33,7 @@ const ImpactFactorForm = props => (
         id="Chart Type"
         title={props.impactFactor.chart}
       >
-        {['Line Chart', 'Bar Chart', 'Pie Chart'].map(type => (
+        {['Pie Chart', 'Bar Chart', 'Line Chart'].map(type => (
           <MenuItem
             key={type}
             onClick={() => props.setImpactValue('chart', type)}
