@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormControl, Glyphicon } from 'react-bootstrap';
+import { FormControl, Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 const MultiTable = props => (
   <table>
@@ -29,16 +29,19 @@ const MultiTable = props => (
               onChange={e => props.setTrendRowValue(1, index, e.target.value)}
             />
           </td>
-          {index > 0 &&
+          {(index > 0) && (index < props.compareTrends.conferences.length - 1) &&
             <td>
-              <Glyphicon
-                style={{ cursor: 'pointer', color: 'red' }}
-                glyph="minus-sign"
-                onClick={() => props.removeTrendRow(index)}
-              />
+              <OverlayTrigger
+                overlay={<Tooltip>Click to remove row</Tooltip>}
+              >
+                <Glyphicon
+                  style={{ cursor: 'pointer', color: 'red' }}
+                  glyph="minus-sign"
+                  onClick={() => props.removeTrendRow(index)}
+                />
+              </OverlayTrigger>
             </td>
           }
-
         </tr>
       ))}
     </tbody>
