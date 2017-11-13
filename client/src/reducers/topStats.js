@@ -9,13 +9,25 @@ const initialState = {
   chart: 'Bar Chart',
 };
 
+const conflicts = {
+  Papers: 'Number of papers',
+  Authors: 'Number of authors',
+  Venues: 'Number of venues',
+};
+
 const topStats = (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_TOP_VALUE':
-      return {
+    case 'SET_TOP_VALUE': {
+      const newState = {
         ...state,
         [action.field]: action.value,
       };
+      if (conflicts[newState.aggregator] === newState.metric) {
+        newState.metric = 'Citations made';
+      }
+      return newState;
+    }
+
     case 'SET_TOP_DATA':
       return {
         ...state,
