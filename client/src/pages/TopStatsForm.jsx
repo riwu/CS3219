@@ -43,13 +43,22 @@ const TopStatsForm = props => (
             id="Top Type"
             title={props.topStats.metric}
           >
-            {['Number of papers', 'Citations made', 'Times cited', 'Number of authors', 'Number of venues'].map(metric => (
-              <MenuItem
-                key={metric}
-                onClick={() => props.setTopValue('metric', metric)}
-                active={props.topStats.metric === metric}
-              >{metric}
-              </MenuItem>
+            {['Number of papers', 'Citations made', 'Times cited', 'Number of authors', 'Number of venues']
+              .filter((metric) => {
+                const conflicts = {
+                  Papers: 'Number of papers',
+                  Authors: 'Number of authors',
+                  Venues: 'Number of venues',
+                };
+                return conflicts[props.topStats.aggregator] !== metric;
+              })
+              .map(metric => (
+                <MenuItem
+                  key={metric}
+                  onClick={() => props.setTopValue('metric', metric)}
+                  active={props.topStats.metric === metric}
+                >{metric}
+                </MenuItem>
           ))}
           </DropdownButton>
         </span>
