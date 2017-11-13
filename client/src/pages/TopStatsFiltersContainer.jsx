@@ -1,11 +1,9 @@
 import { connect } from 'react-redux';
-import TopStats from './TopStats';
+import TopStatsFilters from './TopStatsFilters';
 import { setTopValue, getTopStats } from '../actions';
 
 const mapStateToProps = state => ({
-  data: state.topStats.data,
-  title: state.topStats.title,
-  chart: state.topStats.chart,
+  topStats: state.topStats,
 });
 
 export default connect(
@@ -13,4 +11,4 @@ export default connect(
   {
     setTopValue, getTopStats,
   },
-)(TopStats);
+)(TopStatsFilters);

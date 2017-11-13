@@ -5,7 +5,7 @@ const initialState = {
   venue: '',
   paper: '',
   author: '',
-  data: null,
+  data: [],
   chart: 'Bar Chart',
 };
 

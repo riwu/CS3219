@@ -1,7 +1,7 @@
 const initialState = {
   count: 10,
   year: 2014,
-  data: null,
+  data: [],
   chart: 'Line Chart',
 };
 
