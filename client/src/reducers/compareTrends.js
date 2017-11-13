@@ -7,6 +7,7 @@ const initialState = {
   endYear: '2017',
   data: [],
   chart: 'Line Chart',
+  filterConference: null,
 };
 
 const compareTrends = (state = initialState, action) => {

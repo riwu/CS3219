@@ -1,6 +1,8 @@
 import React from 'react';
 import { Form, FormGroup, ControlLabel, FormControl, Button, DropdownButton,
   MenuItem } from 'react-bootstrap';
+import 'react-select/dist/react-select.css';
+import Select from 'react-select';
 import './filter.css';
 import MultiTable from '../components/MultiTableContainer';
 
@@ -39,6 +41,14 @@ const CompareTrendsFilter = props => (
         />
       </FormGroup>
     </div>
+
+    <Select
+      style={{ width: '200px' }}
+      options={props.venues}
+      value={props.filterConference}
+      onChange={value => props.setTrendValue('filterConference', value)}
+      placeholder="Search for a conference"
+    />
 
     <DropdownButton
       id="Chart Type"

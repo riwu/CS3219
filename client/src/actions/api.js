@@ -8,11 +8,16 @@ const get = (path) => {
   return axios.get(path).then(response => response.data);
 };
 
-const encodeQueries = arr => arr.reduce((str, [key, value]) =>
-  `${str + key}=${encodeURIComponent(value)}&`, '').slice(0, -1); // remove trailing &
+const encodeQueries = arr => arr.reduce((str, [key, val]) => {
+  const value = typeof val === 'string' ? val.trim() : val;
+  if (value === undefined || value === null || value === '') {
+    return str;
+  }
+  return `${str + key}=${encodeURIComponent(value)}&`;
+}, '').slice(0, -1);
 
-const mapToArr = obj => Object.entries(obj).map(([key, value]) =>
-  ({ name: key, value: Math.round(value) }));
+const mapToArr = (obj, label) => Object.entries(obj).map(([key, value]) =>
+  ({ name: key, [label]: Math.round(value) }));
 
 export default {
   getVenues: () => get('venues').then(venues =>
@@ -71,11 +76,13 @@ export default {
     }[params.metric];
 
     const filters = [['n', params.count], ['venue', (params.venue || {}).label || ''],
-      ['author', params.author], ['title', (params.paper || {}).label || '']]
-      .filter(([key, value]) => value.trim() !== '');
-    return get(`top/${aggregator}/${metric}?${encodeQueries(filters)}`).then(data => mapToArr(data));
+      ['author', params.author], ['title', (params.paper || {}).label || '']];
+    return get(`top/${aggregator}/${metric}?${encodeQueries(filters)}`).then(data => mapToArr(data, params.metric));
   },
 
-  getImpactStats: params => get(`year/${params.year}/impact-factor?top=${params.count}`).then(data => mapToArr(data)),
+  getImpactStats: (params) => {
+    const queries = encodeQueries([['top', params.count], ['filterConference', (params.filterConference || {}).label]]);
+    return get(`year/${params.year}/impact-factor?${queries}`).then(data => mapToArr(data, 'Impact factor'));
+  },
   getCitationWeb: ({ paper, depth }) => get(`paper/${encodeURIComponent(paper.trim())}/web-citation?depth=${depth}`),
 };
