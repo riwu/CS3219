@@ -115,16 +115,19 @@ router.get('/top/:aggregator/:metric', async (req, res) => {
   const year = parseInt(req.query.year, 10);
   const parsedN = n === undefined ? 10 : parseInt(n, 10);
 
-  const results = await queryTop(
-    aggregator,
-    metric,
-    parsedN,
-    {
-      venue, title, year, author,
-    },
-  );
-
-  res.send(_.chain(results).keyBy('_id').mapValues('count').value());
+  try {
+    const results = await queryTop(
+      aggregator,
+      metric,
+      parsedN,
+      {
+        venue, title, year, author,
+      },
+    );
+    res.send(_.chain(results).keyBy('_id').mapValues('count').value());
+  } catch (ex) {
+    res.send(404);
+  }
 });
 
 /**

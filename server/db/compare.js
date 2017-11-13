@@ -22,7 +22,7 @@ async function queryCitationYearMap(venue, year, start, end) {
         { $unwind: '$outCitations' },
         {
           $lookup: {
-            from: 'a4papers',
+            from: papersCollection,
             localField: 'outCitations',
             foreignField: 'id',
             as: 'outCitations_docs',
