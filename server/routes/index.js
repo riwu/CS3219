@@ -5,6 +5,7 @@ const { queryRootPaper, queryGraph } = require('../db/web-citation');
 const { queryTop } = require('../db/top');
 const { queryImpactFactor } = require('../db/impact-factor');
 const { queryVenues } = require('../db/venues');
+const { queryTitles } = require('../db/titles');
 
 const router = express.Router();
 
@@ -230,6 +231,11 @@ router.get('/year/:year/impact-factor', async (req, res) => {
 router.get('/venues', async (req, res) => {
   const result = await queryVenues();
   res.send(result.map(venue => venue._id));
+});
+
+router.get('/titles', async (req, res) => {
+  const result = await queryTitles();
+  res.send(result.map(title => title._id));
 });
 
 module.exports = router;
