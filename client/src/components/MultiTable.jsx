@@ -19,7 +19,7 @@ const MultiTable = props => (
             <Select
               style={{ width: '200px' }}
               options={props.venues}
-              value={{ label: conf, value: conf }}
+              value={conf.trim() === '' ? null : { label: conf, value: conf }}
               onChange={value => props.setTrendRowValue(0, index, (value || {}).value || '')}
               placeholder="Search for a conference"
             />

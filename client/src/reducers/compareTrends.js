@@ -21,7 +21,7 @@ const compareTrends = (state = initialState, action) => {
       const row = conferences[action.index].slice();
       row[action.column] = action.value;
       conferences[action.index] = row;
-      if (action.index === conferences.length - 1) {
+      if (action.index === conferences.length - 1 && action.value) {
         conferences.push(['', '']);
       } else if (action.index === conferences.length - 2) {
         if (row.every(field => field.trim() === '')) {
