@@ -69,7 +69,7 @@ const TopStatsForm = props => (
           id="Chart Type"
           title={props.topStats.chart}
         >
-          {['Bar Chart', 'Pie Chart', 'Line Chart'].map(type => (
+          {['Bar Chart', 'Pie Chart', 'Line Chart', 'Area Chart'].map(type => (
             <MenuItem
               key={type}
               onClick={() => props.setTopValue('chart', type)}
