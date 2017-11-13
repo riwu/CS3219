@@ -15,7 +15,7 @@ const Chart = ({ data }) => {
           data={data}
           label={({ value, name }) => `${name} - ${value}`}
           labelLine
-          dataKey="value"
+          dataKey={Object.keys(data[0]).filter(key => key !== 'name')[0]}
         >
           {data.map(({ name }, index) =>
             <Cell key={name} fill={COLORS[index % COLORS.length]} />)
