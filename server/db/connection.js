@@ -4,4 +4,4 @@ const { connect } = require('mongodb').MongoClient;
 // await this connection to use it in depenedent modules.
 module.exports.connection = connect('mongodb://localhost:27017/cs3219');
 
-module.exports.papersCollection = 'a4papers';
+module.exports.papersCollection = 'a5papers';

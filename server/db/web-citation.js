@@ -32,7 +32,7 @@ async function queryGraph(rootPaperObjectId, depth) {
         { $match: { _id: rootPaperObjectId } },
         {
           $graphLookup: {
-            from: 'a4papers',
+            from: papersCollection,
             startWith: '$inCitations',
             connectFromField: 'inCitations',
             connectToField: 'id',
