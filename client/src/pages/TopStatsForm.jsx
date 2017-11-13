@@ -80,6 +80,7 @@ const TopStatsForm = props => (
     <div className="app-topStatFilters">
       <Form inline className="app-form" style={{ alignItems: 'center' }}>
         <h4 style={{ color: '#0084bf' }}>Optional filters</h4>
+        {props.topStats.aggregator !== 'Venues' &&
         <FormGroup style={{ display: 'flex', alignItems: 'center' }}>
           <ControlLabel className="app-controlLabel">Venue</ControlLabel>
           <Select
@@ -90,6 +91,8 @@ const TopStatsForm = props => (
             placeholder="Search for a venue"
           />
         </FormGroup>
+        }
+        {props.topStats.aggregator !== 'Papers' &&
         <FormGroup style={{ display: 'flex', alignItems: 'center' }}>
           <ControlLabel className="app-controlLabel">Paper</ControlLabel>
           <VirtualizedSelect
@@ -101,6 +104,8 @@ const TopStatsForm = props => (
             optionHeight={80}
           />
         </FormGroup>
+        }
+        {props.topStats.aggregator !== 'Authors' &&
         <FormGroup>
           <ControlLabel className="app-controlLabel">Author</ControlLabel>
           <FormControl
@@ -110,6 +115,7 @@ const TopStatsForm = props => (
             placeholder="Enter an author"
           />
         </FormGroup>
+        }
       </Form>
     </div>
   </div>
