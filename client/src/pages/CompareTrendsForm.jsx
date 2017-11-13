@@ -42,13 +42,16 @@ const CompareTrendsFilter = props => (
       </FormGroup>
     </div>
 
-    <Select
-      style={{ width: '200px' }}
-      options={props.venues}
-      value={props.filterConference}
-      onChange={value => props.setTrendValue('filterConference', value)}
-      placeholder="Search for a conference"
-    />
+    <FormGroup>
+      <ControlLabel className="app-controlLabel">Filter conference</ControlLabel>
+      <Select
+        style={{ width: '200px' }}
+        options={props.venues}
+        value={props.filterConference}
+        onChange={value => props.setTrendValue('filterConference', value)}
+        placeholder="Search for a conference"
+      />
+    </FormGroup>
 
     <DropdownButton
       id="Chart Type"
