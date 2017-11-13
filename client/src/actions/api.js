@@ -11,6 +11,8 @@ const get = (path) => {
 const encodeQueries = arr => arr.reduce((str, [key, value]) =>
   `${str + key}=${encodeURIComponent(value)}&`, '').slice(0, -1); // remove trailing &
 
+const mapToArr = obj => Object.entries(obj).map(([key, value]) => ({ name: key, value: Math.round(value) }));
+
 export default {
   getVenues: () => get('venues'),
   getTrendStats: (params) => {
@@ -59,10 +61,9 @@ export default {
 
     const filters = [['n', params.count], ['venue', params.venue], ['author', params.author], ['title', params.paper]]
       .filter(([key, value]) => value.trim() !== '');
-    return get(`top/${aggregator}/${metric}?${encodeQueries(filters)}`).then(data =>
-      Object.entries(data).map(([key, value]) => ({ name: key, value: Math.round(value) })));
+    return get(`top/${aggregator}/${metric}?${encodeQueries(filters)}`).then(data => mapToArr(data));
   },
 
-  getImpactStats: params => get(`year/${params.year}/impact-factor?top=${params.count}`),
+  getImpactStats: params => get(`year/${params.year}/impact-factor?top=${params.count}`).then(data => mapToArr(data)),
   getCitationWeb: ({ paper, depth }) => get(`paper/${encodeURIComponent(paper.trim())}/web-citation?depth=${depth}`),
 };
