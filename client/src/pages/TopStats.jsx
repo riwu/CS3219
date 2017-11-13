@@ -2,12 +2,12 @@ import React from 'react';
 import BarChart from '../components/BarChart';
 import PieChart from '../components/PieChart';
 import LineChart from '../components/LineChart';
-import TopStatsFilters from './TopStatsFiltersContainer';
+import TopStatsForm from './TopStatsFormContainer';
 import './filter.css';
 
 const TopStats = props => (
   <div>
-    <TopStatsFilters />
+    <TopStatsForm />
     {props.title &&
       <h3 className="app-filterTitle">
         Top <span className="app-filterTitleSpecial">{props.title.count} {props.title.aggregator}</span> by

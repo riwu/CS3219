@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, FormGroup, ControlLabel, FormControl, DropdownButton, MenuItem, Button } from 'react-bootstrap';
 import './filter.css';
 
-const TopStatsFilters = props => (
+const TopStatsForm = props => (
   <div>
     <Form inline className="app-form">
       <div>
@@ -106,4 +106,4 @@ const TopStatsFilters = props => (
   </div>
 );
 
-export default TopStatsFilters;
+export default TopStatsForm;

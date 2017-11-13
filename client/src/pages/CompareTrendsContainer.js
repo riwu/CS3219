@@ -1,14 +1,10 @@
 import { connect } from 'react-redux';
 import CompareTrends from './CompareTrends';
-import { setTrendValue, getTrendStats } from '../actions';
 
 const mapStateToProps = state => ({
-  compareTrends: state.compareTrends,
+  data: state.compareTrends.data,
+  chart: state.compareTrends.chart,
+  title: state.compareTrends.title,
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    setTrendValue, getTrendStats,
-  },
-)(CompareTrends);
+export default connect(mapStateToProps)(CompareTrends);

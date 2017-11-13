@@ -1,14 +1,10 @@
 import { connect } from 'react-redux';
 import ImpactFactor from './ImpactFactor';
-import { setImpactValue, getImpactStats } from '../actions';
 
 const mapStateToProps = state => ({
-  impactFactor: state.impactFactor,
+  data: state.impactFactor.data,
+  title: state.impactFactor.title,
+  chart: state.impactFactor.chart,
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    setImpactValue, getImpactStats,
-  },
-)(ImpactFactor);
+export default connect(mapStateToProps)(ImpactFactor);

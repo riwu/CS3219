@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import TopStatsFilters from './TopStatsFilters';
+import TopStatsForm from './TopStatsForm';
 import { setTopValue, getTopStats } from '../actions';
 
 const mapStateToProps = state => ({
@@ -11,4 +11,4 @@ export default connect(
   {
     setTopValue, getTopStats,
   },
-)(TopStatsFilters);
+)(TopStatsForm);
