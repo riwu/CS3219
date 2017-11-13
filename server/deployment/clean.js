@@ -26,5 +26,5 @@ db.a5papers.aggregate([
 
 db.a5papers.find({}, { title: 1 }).forEach((doc) => {
   const newTitle = doc.title.trim();
-  db.collection.update({ _id: doc._id }, { $set: { title: newTitle } });
+  db.a5papers.update({ _id: doc._id }, { $set: { title: newTitle } });
 });
