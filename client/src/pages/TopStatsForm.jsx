@@ -2,7 +2,9 @@ import React from 'react';
 import { Form, FormGroup, ControlLabel, FormControl, DropdownButton, MenuItem, Button } from 'react-bootstrap';
 import VenueInput from '../components/VenueInput';
 import TitleInput from '../components/TitleInput';
+import { conflicts } from '../reducers/topStats';
 import './filter.css';
+
 
 const TopStatsForm = props => (
   <div>
@@ -40,14 +42,7 @@ const TopStatsForm = props => (
             title={props.topStats.metric}
           >
             {['Number of papers', 'Citations made', 'Times cited', 'Number of authors', 'Number of venues']
-              .filter((metric) => {
-                const conflicts = {
-                  Papers: 'Number of papers',
-                  Authors: 'Number of authors',
-                  Venues: 'Number of venues',
-                };
-                return conflicts[props.topStats.aggregator] !== metric;
-              })
+              .filter(metric => !(conflicts[props.topStats.aggregator] || []).includes(metric))
               .map(metric => (
                 <MenuItem
                   key={metric}

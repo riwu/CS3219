@@ -1,3 +1,9 @@
+export const conflicts = {
+  Papers: ['Number of papers', 'Number of venues'],
+  Authors: ['Number of authors'],
+  Venues: ['Number of venues'],
+};
+
 const initialState = {
   count: '10',
   aggregator: 'Venues',
@@ -7,12 +13,6 @@ const initialState = {
   author: '',
   data: null,
   chart: 'Bar Chart',
-};
-
-const conflicts = {
-  Papers: 'Number of papers',
-  Authors: 'Number of authors',
-  Venues: 'Number of venues',
 };
 
 const hiddenFields = {
@@ -29,7 +29,7 @@ const topStats = (state = initialState, action) => {
         [action.field]: action.value,
       };
       if (action.field === 'aggregator') {
-        if (conflicts[newState.aggregator] === newState.metric) {
+        if ((conflicts[newState.aggregator] || []).includes(newState.metric)) {
           newState.metric = 'Citations made';
         }
         newState[hiddenFields[action.value]] = '';
