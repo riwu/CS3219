@@ -28,6 +28,8 @@ const router = express.Router();
  *        - start: The start year (inclusive) for collating citation counts. No limit is set if
  *                 omitted.
  *        - end: The end year (inclusive) for collating citation counts. No limit is set if omitted.
+ *        - filterConference: If this parameter is set, only citations from this conference/venue
+ *                            will be considered.
  *    /compare?conference=ArXiv&year=2010&conference=ICSE&year=2011&start=1996&end=1999
  * Returns: A JSON array with yearly citation counts for each conference specified
  *  [
@@ -55,16 +57,23 @@ router.get('/compare', async (req, res) => {
   const conferences = _.castArray(req.query.conference);
   const years = _.castArray(req.query.year).map(yr => parseInt(yr, 10));
 
-  const { start, end } = req.query;
+  const { start, end, filterConference } = req.query;
   const parsedStart = start === undefined ? null : parseInt(start, 10);
   const parsedEnd = end === undefined ? null : parseInt(end, 10);
+  const parsedVenue = filterConference === undefined ? null : filterConference;
 
   const conferenceYearObjs = _(conferences)
     .zip(years)
     .map(pair => ({ conference: pair[0], year: pair[1] }));
 
   const results = conferenceYearObjs
-    .map(({ conference, year }) => queryCitationYearMap(conference, year, parsedStart, parsedEnd))
+    .map(({ conference, year }) => queryCitationYearMap(
+      conference,
+      year,
+      parsedStart,
+      parsedEnd,
+      parsedVenue,
+    ))
     .value();
 
   const formattedResults = _(await Promise.all(results))
