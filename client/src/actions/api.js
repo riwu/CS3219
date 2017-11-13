@@ -11,10 +11,14 @@ const get = (path) => {
 const encodeQueries = arr => arr.reduce((str, [key, value]) =>
   `${str + key}=${encodeURIComponent(value)}&`, '').slice(0, -1); // remove trailing &
 
-const mapToArr = obj => Object.entries(obj).map(([key, value]) => ({ name: key, value: Math.round(value) }));
+const mapToArr = obj => Object.entries(obj).map(([key, value]) =>
+  ({ name: key, value: Math.round(value) }));
 
 export default {
-  getVenues: () => get('venues'),
+  getVenues: () => get('venues').then(venues =>
+    venues.map(venue => ({ label: venue, value: venue }))),
+  getTitles: () => get('venues').then(venues =>
+    venues.map(venue => ({ label: venue, value: venue }))),
   getTrendStats: (params) => {
     const conferences = params.conferences
       .filter(([conf, year]) => conf.trim() !== '' && year.trim() !== '');
@@ -66,7 +70,7 @@ export default {
       'Number of venues': 'numVenues',
     }[params.metric];
 
-    const filters = [['n', params.count], ['venue', params.venue], ['author', params.author], ['title', params.paper]]
+    const filters = [['n', params.count], ['venue', params.venue.label], ['author', params.author], ['title', params.paper]]
       .filter(([key, value]) => value.trim() !== '');
     return get(`top/${aggregator}/${metric}?${encodeQueries(filters)}`).then(data => mapToArr(data));
   },

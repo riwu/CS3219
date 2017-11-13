@@ -1,4 +1,9 @@
 import React from 'react';
+import 'react-select/dist/react-select.css';
+import 'react-virtualized/styles.css';
+import 'react-virtualized-select/styles.css';
+import VirtualizedSelect from 'react-virtualized-select';
+
 import { Form, FormGroup, ControlLabel, FormControl, DropdownButton, MenuItem, Button } from 'react-bootstrap';
 import './filter.css';
 
@@ -72,14 +77,15 @@ const TopStatsForm = props => (
       </Button>
     </Form>
     <div className="app-topStatFilters">
-      <Form inline className="app-form">
+      <Form inline className="app-form" style={{ alignItems: 'center' }}>
         <h4 style={{ color: '#0084bf' }}>Optional filters</h4>
-        <FormGroup>
+        <FormGroup style={{ display: 'flex', alignItems: 'center' }}>
           <ControlLabel className="app-controlLabel">Venue</ControlLabel>
-          <FormControl
+          <VirtualizedSelect
+            style={{ width: '300px' }}
+            options={props.venues}
             value={props.topStats.venue}
-            onChange={e => props.setTopValue('venue', e.target.value)}
-            autoComplete="on"
+            onChange={value => props.setTopValue('venue', value)}
             placeholder="Enter a venue"
           />
         </FormGroup>

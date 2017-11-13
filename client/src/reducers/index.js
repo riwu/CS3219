@@ -4,6 +4,7 @@ import topStats from './topStats';
 import impactFactor from './impactFactor';
 import compareTrends from './compareTrends';
 import citationWeb from './citationWeb';
+import venues from './venues';
 
 const reducer = combineReducers({
   route: routerReducer,
@@ -11,6 +12,7 @@ const reducer = combineReducers({
   impactFactor,
   compareTrends,
   citationWeb,
+  venues,
 });
 
 export default reducer;
