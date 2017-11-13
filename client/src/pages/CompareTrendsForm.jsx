@@ -21,7 +21,7 @@ const CompareTrendsFilter = props => (
           type="number"
           value={props.compareTrends.startYear}
           min={1}
-          max={9999}
+          max={99999}
           onChange={e => props.setTrendValue('startYear', e.target.value)}
         />
       </FormGroup>
@@ -32,7 +32,7 @@ const CompareTrendsFilter = props => (
           type="number"
           value={props.compareTrends.endYear}
           min={1}
-          max={9999}
+          max={99999}
           onChange={e => props.setTrendValue('endYear', e.target.value)}
         />
       </FormGroup>

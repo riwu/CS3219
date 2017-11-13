@@ -26,7 +26,7 @@ const MultiTable = props => (
               type="number"
               value={year}
               min={1}
-              max={9999}
+              max={99999}
               onChange={e => props.setTrendRowValue(1, index, e.target.value)}
             />
           </td>

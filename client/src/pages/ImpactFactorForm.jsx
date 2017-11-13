@@ -23,7 +23,7 @@ const ImpactFactorForm = props => (
             type="number"
             value={props.impactFactor.year}
             min={1}
-            max={9999}
+            max={99999}
             onChange={e => props.setImpactValue('year', e.target.value)}
           />
         </FormGroup>
