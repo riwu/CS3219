@@ -64,7 +64,6 @@ const TopStatsForm = props => (
         </span>
       </div>
       <FormGroup>
-        <ControlLabel className="app-controlLabel">Graph type</ControlLabel>
         <DropdownButton
           id="Chart Type"
           title={props.topStats.chart}
@@ -110,7 +109,7 @@ const TopStatsForm = props => (
             value={props.topStats.paper}
             onChange={value => props.setTopValue('paper', value)}
             placeholder="Search for a paper"
-            optionHeight={80}
+            optionHeight={({ option }) => option.label.length * 0.7}
           />
         </FormGroup>
         }

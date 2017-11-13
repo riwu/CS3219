@@ -2,8 +2,8 @@ const initialState = {
   count: '10',
   aggregator: 'Authors',
   metric: 'Number of papers',
-  venue: '',
-  paper: '',
+  venue: null,
+  paper: null,
   author: '',
   data: [],
   chart: 'Bar Chart',
@@ -15,6 +15,12 @@ const conflicts = {
   Venues: 'Number of venues',
 };
 
+const hiddenFields = {
+  Authors: 'author',
+  Venues: 'venue',
+  Papers: 'paper',
+};
+
 const topStats = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_TOP_VALUE': {
@@ -22,8 +28,11 @@ const topStats = (state = initialState, action) => {
         ...state,
         [action.field]: action.value,
       };
-      if (conflicts[newState.aggregator] === newState.metric) {
-        newState.metric = 'Citations made';
+      if (action.field === 'aggregator') {
+        if (conflicts[newState.aggregator] === newState.metric) {
+          newState.metric = 'Citations made';
+        }
+        newState[hiddenFields[action.value]] = '';
       }
       return newState;
     }

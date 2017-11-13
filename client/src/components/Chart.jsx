@@ -10,7 +10,7 @@ const Chart = ({ data, ChartType, ChartFill }) => {
     return <h1 style={{ textAlign: 'center', color: 'red', marginTop: '100px' }}>No results found</h1>;
   }
   return (
-    <ResponsiveContainer height={height - 230}>
+    <ResponsiveContainer height={height - 310}>
       <ChartType data={data}>
         <XAxis dataKey={X_AXIS_KEY} />
         <YAxis />
