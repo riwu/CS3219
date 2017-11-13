@@ -1,5 +1,5 @@
 import React from 'react';
-import { XAxis, YAxis, Tooltip, Line, ResponsiveContainer } from 'recharts';
+import { XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 const X_AXIS_KEY = 'name';
 const height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);

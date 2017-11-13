@@ -1,6 +1,7 @@
 const initialState = {
   conferences: [
     ['ArXiv', '2014'],
+    ['', ''],
   ],
   startYear: '2000',
   endYear: '2017',
@@ -16,10 +17,14 @@ const compareTrends = (state = initialState, action) => {
         [action.field]: action.value,
       };
     case 'SET_TREND_ROW_VALUE': {
+      return { ...state };
       const conferences = state.conferences.slice();
-      const row = conferences[action.index].slice();
-      row[action.column] = action.value;
-      conferences[action.index] = row;
+      // const row = conferences[action.index].slice();
+      // row[action.column] = action.value;
+      // conferences[action.index] = row;
+      // if (action.index === conferences.length - 1) {
+      //   conferences.push(['', '']);
+      // }
       return {
         ...state,
         conferences,
@@ -33,14 +38,6 @@ const compareTrends = (state = initialState, action) => {
         conferences,
       };
     }
-    case 'SET_NEW_TREND_ROW':
-      return {
-        ...state,
-        conferences: [
-          ...state.conferences,
-          [action.column === 0 ? [action.value, ''] : ['', action.value]],
-        ],
-      };
     case 'SET_TREND_DATA':
       return {
         ...state,

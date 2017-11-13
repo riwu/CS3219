@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import MultiTable from './MultiTable';
-import { setNewTrendRow, setTrendRowValue, removeTrendRow } from '../actions';
+import { setTrendRowValue, removeTrendRow } from '../actions';
 
 const mapStateToProps = state => ({
   compareTrends: state.compareTrends,
@@ -9,6 +9,6 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    setNewTrendRow, setTrendRowValue, removeTrendRow,
+    setTrendRowValue, removeTrendRow,
   },
 )(MultiTable);

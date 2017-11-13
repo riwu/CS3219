@@ -41,26 +41,6 @@ const MultiTable = props => (
 
         </tr>
       ))}
-
-      <tr>
-        <td>
-          <FormControl
-            value=""
-            onChange={e => props.setNewTrendRow(0, e.target.value)}
-            autoComplete="on"
-            placeholder="Enter a venue"
-          />
-        </td>
-        <td>
-          <FormControl
-            type="number"
-            value=""
-            min={1}
-            max={9999}
-            onChange={e => props.setNewTrendRow('year', e.target.value)}
-          />
-        </td>
-      </tr>
     </tbody>
   </table>
 );

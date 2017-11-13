@@ -51,12 +51,6 @@ export const removeTrendRow = index => ({
   index,
 });
 
-export const setNewTrendRow = (column, value) => ({
-  type: 'SET_NEW_TREND_ROW',
-  column,
-  value,
-});
-
 export const setTrendValue = (field, value) => ({
   type: 'SET_TREND_VALUE',
   field,
