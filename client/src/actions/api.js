@@ -16,8 +16,14 @@ const encodeQueries = arr => arr.reduce((str, [key, val]) => {
   return `${str + key}=${encodeURIComponent(value)}&`;
 }, '').slice(0, -1);
 
-const mapToArr = (obj, label) => Object.entries(obj).map(([key, value]) =>
-  ({ name: key, [label]: Math.round(value) }));
+const mapToArr = (obj, label, sortByValue) => {
+  const arr = Object.entries(obj).map(([key, value]) =>
+    ({ name: key, [label]: Math.round(value) }));
+  if (sortByValue) {
+    arr.sort((obj1, obj2) => obj2[label] - obj1[label]); // eslint-disable-line
+  }
+  return arr;
+};
 
 export default {
   getVenues: () => get('venues').then(venues =>
@@ -78,7 +84,8 @@ export default {
 
     const filters = [['n', params.count], ['venue', (params.venue || {}).label || ''],
       ['author', params.author], ['title', (params.paper || {}).label || '']];
-    return get(`top/${aggregator}/${metric}?${encodeQueries(filters)}`).then(data => mapToArr(data, params.metric));
+    return get(`top/${aggregator}/${metric}?${encodeQueries(filters)}`)
+      .then(data => mapToArr(data, params.metric, params.aggregator === 'Years'));
   },
 
   getImpactStats: params => get(`year/${params.year}/impact-factor?top=${params.count}`)
