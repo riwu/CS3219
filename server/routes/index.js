@@ -9,6 +9,10 @@ const { queryTitles } = require('../db/titles');
 
 const router = express.Router();
 
+router.get('/', (req, res) => {
+  res.send('Data vis API');
+});
+
 /**
  * Compare API
  *

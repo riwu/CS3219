@@ -15,7 +15,12 @@ app.use((req, res, next) => {
 
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+app.use(logger((tokens, req, res) => [
+  tokens.method(req, res),
+  tokens.url(req, res),
+  tokens['response-time'](req, res), 'ms',
+  JSON.stringify(req.body),
+].join(' ')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

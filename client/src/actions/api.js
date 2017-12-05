@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://cs3219.ycholocron.com/';
+axios.defaults.baseURL = 'https://wangriwu.com:3020/';
 // axios.defaults.baseURL = 'http://localhost:3020/';
 
 const get = (path) => {
