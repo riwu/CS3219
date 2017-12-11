@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "deploy": "pm2 start ./bin/www --log-date-format='YYYY-MM-DD HH:mm:ss' --watch",
+    "deploy": "pm2 start bin/www --log-date-format='YYYY-MM-DD HH:mm:ss' --watch",
     "build": "node app.js"
   },
   "dependencies": {

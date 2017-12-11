@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://wangriwu.com:3020/';
+axios.defaults.baseURL = `${process.env.API_BASE_URL}/`;
 // axios.defaults.baseURL = 'http://localhost:3020/';
 
 const get = (path) => {
