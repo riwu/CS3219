@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = `${process.env.API_BASE_URL}/`;
+axios.defaults.baseURL = `${process.env.REACT_APP_VIS_URL}/`;
 // axios.defaults.baseURL = 'http://localhost:3020/';
 
 const get = (path) => {
