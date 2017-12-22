@@ -9,10 +9,6 @@ const { queryTitles } = require('../db/titles');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.send('Data vis API');
-});
-
 /**
  * Compare API
  *
@@ -71,17 +67,15 @@ router.get('/compare', async (req, res) => {
     .map(pair => ({ conference: pair[0], year: pair[1] }));
 
   const results = conferenceYearObjs
-    .map(({ conference, year }) => queryCitationYearMap(
-      conference,
-      year,
-      parsedStart,
-      parsedEnd,
-      parsedVenue,
-    ))
+    .map(({ conference, year }) =>
+      queryCitationYearMap(conference, year, parsedStart, parsedEnd, parsedVenue))
     .value();
 
   const formattedResults = _(await Promise.all(results))
-    .map(result => _(result).keyBy('cite_year').mapValues('cite_count'))
+    .map(result =>
+      _(result)
+        .keyBy('cite_year')
+        .mapValues('cite_count'))
     .zip(conferenceYearObjs.value())
     .map(result => Object.assign({ citations: result[0] }, result[1]))
     .value();
@@ -130,15 +124,16 @@ router.get('/top/:aggregator/:metric', async (req, res) => {
   const parsedN = n === undefined ? 10 : parseInt(n, 10);
 
   try {
-    const results = await queryTop(
-      aggregator,
-      metric,
-      parsedN,
-      {
-        venue, title, year, author,
-      },
-    );
-    res.send(_.chain(results).keyBy('_id').mapValues('count').value());
+    const results = await queryTop(aggregator, metric, parsedN, {
+      venue,
+      title,
+      year,
+      author,
+    });
+    res.send(_.chain(results)
+      .keyBy('_id')
+      .mapValues('count')
+      .value());
   } catch (ex) {
     res.send(404);
   }
@@ -195,7 +190,9 @@ router.get('/paper/:paper/web-citation', async (req, res) => {
   const webPapers = await queryGraph(rootPaper._id, parsedDepth);
   const results = Object.assign(
     { topId: rootPaper.id, [rootPaper.id]: rootPaper },
-    _(webPapers).keyBy('id').value(),
+    _(webPapers)
+      .keyBy('id')
+      .value(),
   );
   res.send(results);
 });
@@ -229,7 +226,10 @@ router.get('/year/:year/impact-factor', async (req, res) => {
   const yearInt = parseInt(year, 10);
 
   const result = await queryImpactFactor(yearInt, parsedTop);
-  res.send(_(result).keyBy('_id').mapValues('impactFactor').value());
+  res.send(_(result)
+    .keyBy('_id')
+    .mapValues('impactFactor')
+    .value());
 });
 
 /**

@@ -13,14 +13,22 @@ app.use((req, res, next) => {
   next();
 });
 
-// uncomment after placing your favicon in /public
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger((tokens, req, res) => [
-  tokens.method(req, res),
-  tokens.url(req, res),
-  tokens['response-time'](req, res), 'ms',
-  JSON.stringify(req.body),
-].join(' ')));
+app.get('/', (req, res) => {
+  res.end();
+});
+app.get('/favicon.ico', (req, res) => {
+  // for browser request
+  res.status(204).send();
+});
+
+app.use(logger((tokens, req, res) =>
+  [
+    tokens.method(req, res),
+    tokens.url(req, res),
+    tokens['response-time'](req, res),
+    'ms',
+    JSON.stringify(req.body),
+  ].join(' ')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
