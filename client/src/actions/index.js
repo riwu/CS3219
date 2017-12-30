@@ -25,10 +25,18 @@ export const setTopValue = (field, value) => ({
 });
 
 export const getTopStats = params => (dispatch) => {
+  dispatch({
+    type: 'SET_FETCHING',
+    isFetching: true,
+  });
   api.getTopStats(params).then((data) => {
     dispatch({
       type: 'SET_TOP_DATA',
       data,
+    });
+    dispatch({
+      type: 'SET_FETCHING',
+      isFetching: false,
     });
   });
 };
@@ -40,10 +48,18 @@ export const setImpactValue = (field, value) => ({
 });
 
 export const getImpactStats = queries => (dispatch) => {
+  dispatch({
+    type: 'SET_FETCHING',
+    isFetching: true,
+  });
   api.getImpactStats(queries).then((data) => {
     dispatch({
       type: 'SET_IMPACT_DATA',
       data,
+    });
+    dispatch({
+      type: 'SET_FETCHING',
+      isFetching: false,
     });
   });
 };
@@ -67,10 +83,18 @@ export const setTrendValue = (field, value) => ({
 });
 
 export const getTrendStats = venueQueries => (dispatch) => {
+  dispatch({
+    type: 'SET_FETCHING',
+    isFetching: true,
+  });
   api.getTrendStats(venueQueries).then((data) => {
     dispatch({
       type: 'SET_TREND_DATA',
       data,
+    });
+    dispatch({
+      type: 'SET_FETCHING',
+      isFetching: false,
     });
   });
 };
@@ -82,15 +106,30 @@ export const setCitationValue = (field, value) => ({
 });
 
 export const getCitationWeb = paper => (dispatch) => {
-  api.getCitationWeb(paper).then((data) => {
-    dispatch({
-      type: 'SET_CITATION_DATA',
-      data,
-    });
-  }).catch(() => {
-    dispatch({
-      type: 'SET_CITATION_DATA',
-      data: {},
-    });
+  dispatch({
+    type: 'SET_FETCHING',
+    isFetching: true,
   });
+  api
+    .getCitationWeb(paper)
+    .then((data) => {
+      dispatch({
+        type: 'SET_CITATION_DATA',
+        data,
+      });
+      dispatch({
+        type: 'SET_FETCHING',
+        isFetching: false,
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: 'SET_CITATION_DATA',
+        data: {},
+      });
+      dispatch({
+        type: 'SET_FETCHING',
+        isFetching: false,
+      });
+    });
 };
