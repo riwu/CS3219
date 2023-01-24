@@ -1,7 +1,9 @@
-const { connect } = require('mongodb').MongoClient;
+const { MongoClient } = require("mongodb");
 
-// Exports a promise of a Mongo Connector
-// await this connection to use it in depenedent modules.
-module.exports.connection = connect('mongodb://localhost:27017/cs3219');
+const { MONGO_USER, MONGO_PASSWORD, MONGO_HOST, MONGO_PORT } = process.env;
 
-module.exports.papersCollection = 'a5papers';
+const client = new MongoClient(`mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}`);
+const db = client.db("cs3219");
+
+module.exports.connection = db;
+module.exports.papersCollection = "a5papers";
